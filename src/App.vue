@@ -18,9 +18,6 @@ getHome();
 </script>
 
 <style scoped lang="less">
-@import "@/assets/styles/variables.less";
-@import "@/assets/styles/mixins";
-
 button {
   background-color: @xtxColor;
   .hoverShadow();
