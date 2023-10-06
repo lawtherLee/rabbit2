@@ -1,29 +1,7 @@
 <template>
-  <div>
-    hello world
-    <button class="hoverShadow">登录</button>
-    <p class="hoverShadow">a11</p>
-  </div>
+  <router-view />
 </template>
 
-<script setup lang="ts">
-import instance from "@/utils/request.ts";
+<script setup lang="ts"></script>
 
-async function getHome() {
-  const res = await instance.get("/home/index");
-  console.log(res);
-}
-
-getHome();
-</script>
-
-<style scoped lang="less">
-button {
-  background-color: @xtxColor;
-  .hoverShadow();
-}
-
-p {
-  .hoverShadow();
-}
-</style>
+<style scoped></style>

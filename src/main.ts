@@ -1,5 +1,15 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
 
-createApp(App).mount('#app')
+// 引入样式重置,将不同浏览器样式统一
+import "normalize.css";
+// 引入公共样式
+import "@/assets/styles/common.less";
+import router from "@/router";
+import { createPinia } from "pinia";
+
+const app = createApp(App);
+const pinia = createPinia();
+app.use(pinia);
+app.use(router);
+app.mount("#app");
