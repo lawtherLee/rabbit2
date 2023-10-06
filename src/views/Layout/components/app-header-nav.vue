@@ -10,13 +10,23 @@ useCategoryStore.getCategory();
     <li class="home">
       <RouterLink to="/">首页</RouterLink>
     </li>
-    <li v-for="item in useCategoryStore.list" :key="item.id">
+    <li
+      @click="useCategoryStore.toggleSub(item.id, false)"
+      @mouseenter="useCategoryStore.toggleSub(item.id, true)"
+      @mouseleave="useCategoryStore.toggleSub(item.id, false)"
+      v-for="item in useCategoryStore.list"
+      :key="item.id"
+    >
       <router-link :to="'/category/' + item.id" href="#"
         >{{ item.name }}
       </router-link>
       <div class="layer" :class="{ openSub: item.open }">
         <ul>
-          <li v-for="sub in item.children" :key="sub.id">
+          <li
+            @click="useCategoryStore.toggleSub(sub.id, false)"
+            v-for="sub in item.children"
+            :key="sub.id"
+          >
             <router-link :to="'/category/sub/' + sub.id" href="#">
               <img :src="sub.picture" alt="" />
               <p>{{ sub.name }}</p>

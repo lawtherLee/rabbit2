@@ -25,5 +25,18 @@ export default defineStore("category", {
       });
       this.list = res.data.result;
     },
+    // 显示二级分类盒子
+    // shouSub(id: number) {
+    //   const findItem = this.list.find((item) => item.id === id);
+    //   if (findItem) findItem.open = true;
+    // },
+    // hideSub(id: number) {
+    //   const findItem = this.list.find((item) => item.id === id);
+    //   if (findItem) findItem.open = false;
+    // },
+    toggleSub(id: number, open: boolean) {
+      const findItem = this.list.find((item) => item.id === id);
+      if (findItem) findItem.open = open;
+    },
   },
 });
