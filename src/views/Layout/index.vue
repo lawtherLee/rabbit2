@@ -2,6 +2,7 @@
 import AppTopNav from "@/views/Layout/components/app-top-nav.vue";
 import AppHeader from "@/views/Layout/components/app-header.vue";
 import AppFooter from "@/views/Layout/components/app-footer.vue";
+import AppHeaderSticky from "@/views/Layout/components/app-header-sticky.vue";
 
 console.log(123);
 </script>
@@ -9,7 +10,10 @@ console.log(123);
 <template>
   <app-top-nav />
   <app-header />
-  <router-view />
+  <app-header-sticky />
+  <div style="height: 1000px">
+    <router-view />
+  </div>
   <app-footer />
 </template>
 
