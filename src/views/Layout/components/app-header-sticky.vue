@@ -1,22 +1,24 @@
 <script lang="ts" setup name="AppHeaderSticky">
 import AppHeaderNav from "./app-header-nav.vue";
-import { onBeforeUnmount, ref } from "vue";
+import { useWindowScroll } from "@vueuse/core";
 
-const y = ref(0);
-const onScroll = () => {
-  // 获取滚动条距离文档的高度
-  y.value = document.documentElement.scrollTop;
-};
-window.addEventListener("scroll", onScroll);
+const { y } = useWindowScroll();
 
-onBeforeUnmount(() => {
-  window.removeEventListener("scroll", onScroll);
-});
+// const y = ref(0);
+// const onScroll = () => {
+//   // 获取滚动条距离文档的高度
+//   y.value = document.documentElement.scrollTop;
+// };
+// window.addEventListener("scroll", onScroll);
+//
+// onBeforeUnmount(() => {
+//   window.removeEventListener("scroll", onScroll);
+// });
 </script>
 
 <template>
   <div class="app-header-sticky" :class="{ show: y >= 78 }">
-    <div class="container">
+    <div class="container" v-show="y >= 78">
       <RouterLink class="logo" to="/" />
       <AppHeaderNav />
       <div class="right">
