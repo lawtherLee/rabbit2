@@ -6,17 +6,20 @@ import { ref } from "vue";
 const { useCategoryStore } = useStore();
 
 const currentGoods = ref<GoodsType[]>([]);
-const getCurrentGoods = (goods: GoodsType[]) => {
+const currentId = ref(-1);
+const getCurrentGoods = (goods: GoodsType[], id: number) => {
   currentGoods.value = goods;
+  currentId.value = id;
 };
 </script>
 <template>
   <div class="home-category">
     <ul class="menu">
       <li
-        @mouseenter="getCurrentGoods(item.goods)"
+        @mouseenter="getCurrentGoods(item.goods, item.id)"
         v-for="item in useCategoryStore.list"
         :key="item.id"
+        :class="{ active: currentId === item.id }"
       >
         <RouterLink to="/">{{ item.name }}</RouterLink>
         <RouterLink
@@ -27,7 +30,7 @@ const getCurrentGoods = (goods: GoodsType[]) => {
         </RouterLink>
       </li>
     </ul>
-    <div class="layer">
+    <div class="layer" @mouseleave="currentId = -1">
       <h4>
         分类推荐
         <small>根据您的购买或浏览记录推荐</small>
@@ -65,7 +68,8 @@ const getCurrentGoods = (goods: GoodsType[]) => {
       height: 55px;
       line-height: 55px;
 
-      &:hover {
+      //&:hover,
+      &.active {
         background: @xtxColor;
       }
 
