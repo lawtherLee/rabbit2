@@ -1,11 +1,19 @@
-<script lang="ts" setup name="HomeCategory"></script>
+<script lang="ts" setup name="HomeCategory">
+import useStore from "@/store";
+
+const { useCategoryStore } = useStore();
+</script>
 <template>
   <div class="home-category">
     <ul class="menu">
-      <li v-for="i in 10" :key="i">
-        <RouterLink to="/">居家</RouterLink>
-        <RouterLink to="/">洗漱</RouterLink>
-        <RouterLink to="/">清洁</RouterLink>
+      <li v-for="item in useCategoryStore.list" :key="item.id">
+        <RouterLink to="/">{{ item.name }}</RouterLink>
+        <RouterLink
+          to="/"
+          v-for="sub in item.children.slice(0, 2)"
+          :key="sub.id"
+          >{{ sub.name }}
+        </RouterLink>
       </li>
     </ul>
   </div>
