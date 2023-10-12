@@ -22,12 +22,34 @@ const getCurrentGoods = (goods: GoodsType[], id: number) => {
         :class="{ active: currentId === item.id }"
       >
         <RouterLink to="/">{{ item.name }}</RouterLink>
-        <RouterLink
-          to="/"
-          v-for="sub in item.children?.slice(0, 2)"
-          :key="sub.id"
-          >{{ sub.name }}
-        </RouterLink>
+        <!--        渲染的内容-->
+        <template v-if="item.children">
+          <RouterLink
+            to="/"
+            v-for="sub in item.children?.slice(0, 2)"
+            :key="sub.id"
+            >{{ sub.name }}
+          </RouterLink>
+        </template>
+        <!--        骨架屏-->
+        <template v-else>
+          <XtxSkeleton
+            bg="pink"
+            :width="30"
+            :height="20"
+            animated
+            fade
+            style="margin-left: 15px"
+          />
+          <XtxSkeleton
+            bg="pink"
+            :width="30"
+            :height="20"
+            animated
+            fade
+            style="margin-left: 15px"
+          />
+        </template>
       </li>
     </ul>
     <div class="layer">
