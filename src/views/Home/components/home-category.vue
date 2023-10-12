@@ -13,7 +13,7 @@ const getCurrentGoods = (goods: GoodsType[], id: number) => {
 };
 </script>
 <template>
-  <div class="home-category">
+  <div class="home-category" @mouseleave="currentId = -1">
     <ul class="menu">
       <li
         @mouseenter="getCurrentGoods(item.goods, item.id)"
@@ -30,7 +30,7 @@ const getCurrentGoods = (goods: GoodsType[], id: number) => {
         </RouterLink>
       </li>
     </ul>
-    <div class="layer" @mouseleave="currentId = -1">
+    <div class="layer">
       <h4>
         分类推荐
         <small>根据您的购买或浏览记录推荐</small>
