@@ -23,3 +23,10 @@ export type GoodsType = {
   picture: string;
   desc: string;
 };
+
+export type HomeBanner = {
+  imgUrl: string;
+  hrefUrl: string;
+  id: string;
+  type: string;
+};
