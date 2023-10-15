@@ -8,7 +8,7 @@ const {
   banners,
   duration,
   autoplay = false,
-  isShowIndicator,
+  isShowIndicator = true,
 } = defineProps<{
   banners: HomeBanner[];
   duration?: number;
@@ -21,12 +21,20 @@ let setId: number | null = null;
 const play = () => {
   if (!autoplay) return;
   setId = setInterval(() => {
-    active.value = (active.value + 1) % banners.length;
+    next();
   }, duration || 1000);
 };
 // 暂停
 const stopBanners = () => {
   clearInterval(setId!);
+};
+// 下一张的逻辑
+const next = () => {
+  active.value = (active.value + 1) % banners.length;
+};
+// 上一张的逻辑
+const prev = () => {
+  active.value = (active.value - 1 + banners.length) % banners.length;
 };
 play();
 </script>
@@ -45,10 +53,10 @@ play();
         </RouterLink>
       </li>
     </ul>
-    <a href="javascript:" class="carousel-btn prev">
+    <a href="javascript:" class="carousel-btn prev" @click="prev">
       <i class="iconfont icon-angle-left"></i>
     </a>
-    <a href="javascript:" class="carousel-btn next">
+    <a href="javascript:" class="carousel-btn next" @click="next">
       <i class="iconfont icon-angle-right"></i>
     </a>
     <div class="carousel-indicator" v-show="isShowIndicator">
@@ -56,6 +64,7 @@ play();
         v-for="(item, index) in banners"
         :key="item.id"
         :class="{ active: index === active }"
+        @click="active = index"
       ></span>
     </div>
   </div>
@@ -136,7 +145,7 @@ play();
       transition: all 0.5s;
 
       &.prev {
-        left: 20px;
+        left: 270px;
       }
 
       &.next {

@@ -11,7 +11,6 @@ useHomeStore.getBannerList();
       :autoplay="true"
       :banners="useHomeStore.bannerList"
       :duration="2000"
-      :isShowIndicator="false"
     />
   </div>
 </template>
