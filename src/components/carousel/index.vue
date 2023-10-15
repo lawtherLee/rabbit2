@@ -15,18 +15,24 @@ const {
   autoplay?: boolean;
   isShowIndicator?: boolean;
 }>();
+
+let setId: number | null = null;
 // 播放轮播图
 const play = () => {
   if (!autoplay) return;
-  setInterval(() => {
+  setId = setInterval(() => {
     active.value = (active.value + 1) % banners.length;
   }, duration || 1000);
+};
+// 暂停
+const stopBanners = () => {
+  clearInterval(setId!);
 };
 play();
 </script>
 
 <template>
-  <div class="xtx-carousel">
+  <div class="xtx-carousel" @mouseenter="stopBanners" @mouseleave="play">
     <ul class="carousel-body">
       <li
         v-for="(item, index) in banners"
