@@ -3,7 +3,7 @@ import vue from "@vitejs/plugin-vue"; // https://vitejs.dev/config/
 import vueSetupExtend from "vite-plugin-vue-setup-extend"; // https://vitejs.dev/config/
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), vueSetupExtend()],
+  plugins: [vue({ reactivityTransform: true }), vueSetupExtend()],
   resolve: {
     alias: {
       "@": "/src",
