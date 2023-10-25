@@ -12,9 +12,9 @@ const props = defineProps<{
           {{ title }}
           <small>{{ subTitle }}</small>
         </h3>
-        查看更多
+        <slot name="more"></slot>
       </div>
-      面板的内容
+      <slot name="body"></slot>
     </div>
   </div>
 </template>
