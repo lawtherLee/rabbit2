@@ -30,4 +30,10 @@ export type HomeBanner = {
   id: string;
   type: string;
 };
-//
+// 首页人气推荐
+export type HomeHotGoods = {
+  alt: string;
+  id: string;
+  picture: string;
+  title: string;
+};

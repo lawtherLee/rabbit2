@@ -1,12 +1,13 @@
 import { defineStore } from "pinia";
 import instance from "@/utils/request.ts";
-import { GoodsType, HomeBanner, IAxiosRes } from "@/types/data";
+import { GoodsType, HomeBanner, HomeHotGoods, IAxiosRes } from "@/types/data";
 
 export default defineStore("home", {
   state: () => {
     return {
       bannerList: [] as HomeBanner[],
-      newGoods: [],
+      newGoods: [] as GoodsType[],
+      hotGoods: [] as HomeHotGoods[],
     };
   },
   actions: {
@@ -19,8 +20,14 @@ export default defineStore("home", {
     async getNewGoods() {
       // <IAxiosRes<any>>
       const res = await instance.get<IAxiosRes<GoodsType[]>>("/home/new");
-      console.log(res);
+      // console.log(res);
       this.newGoods = res.data.result;
+    },
+    // 获取人气推荐
+    async getHotGoods() {
+      const res = await instance.get<IAxiosRes<HomeHotGoods[]>>("/home/hot");
+      // console.log(res);
+      this.hotGoods = res.data.result;
     },
   },
 });

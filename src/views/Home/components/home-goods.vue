@@ -1,19 +1,21 @@
+<script lang="ts" setup>
+import { GoodsType } from "@/types/data";
+
+const props = defineProps<{
+  goods: GoodsType[];
+}>();
+</script>
 <template>
   <ul class="goods-list">
-    <li v-for="item in 4" :key="item">
+    <li v-for="item in props.goods" :key="item.id">
       <RouterLink to="/">
-        <img
-          src="https://yanxuan-item.nosdn.127.net/e7337596de7161c57c27e8d8040231aa.jpg"
-          alt=""
-        />
-        <p class="name ellipsis">情侣款时尚户外轻型徒步鞋环保大底</p>
-        <p class="price">&yen;364.00</p>
+        <img :src="item.picture" alt="" />
+        <p class="name ellipsis">{{ item.name }}</p>
+        <p class="price">&yen;{{ item.price }}</p>
       </RouterLink>
     </li>
   </ul>
 </template>
-
-<script lang="ts" setup></script>
 
 <style scoped lang="less">
 .goods-list {

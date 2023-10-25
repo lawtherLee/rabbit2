@@ -16,7 +16,7 @@ useHomeStore.getNewGoods();
       </template>
       <!--          面板主体-->
       <template #body>
-        <home-goods />
+        <home-goods :goods="useHomeStore.newGoods" />
       </template>
     </HomePanel>
   </div>

@@ -11,7 +11,7 @@ console.log(123);
   <app-top-nav />
   <app-header />
   <app-header-sticky />
-  <div style="height: 1000px">
+  <div>
     <router-view />
   </div>
   <app-footer />
