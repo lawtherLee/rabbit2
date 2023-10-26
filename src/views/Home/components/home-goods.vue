@@ -9,7 +9,7 @@ const props = defineProps<{
   <ul class="goods-list">
     <li v-for="item in props.goods" :key="item.id">
       <RouterLink to="/">
-        <img :src="item.picture" alt="" />
+        <img v-lazyLoad="item.picture" alt="" />
         <p class="name ellipsis">{{ item.name }}</p>
         <p class="price">
           <slot :row1="item"></slot>
