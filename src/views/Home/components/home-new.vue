@@ -16,7 +16,11 @@ useHomeStore.getNewGoods();
       </template>
       <!--          面板主体-->
       <template #body>
-        <home-goods :goods="useHomeStore.newGoods" />
+        <home-goods :goods="useHomeStore.newGoods">
+          <template v-slot="{ row1 }">
+            <span>${{ row1.price }}</span>
+          </template>
+        </home-goods>
       </template>
     </HomePanel>
   </div>

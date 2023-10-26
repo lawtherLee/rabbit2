@@ -11,7 +11,9 @@ const props = defineProps<{
       <RouterLink to="/">
         <img :src="item.picture" alt="" />
         <p class="name ellipsis">{{ item.name }}</p>
-        <p class="price">&yen;{{ item.price }}</p>
+        <p class="price">
+          <slot :row1="item"></slot>
+        </p>
       </RouterLink>
     </li>
   </ul>

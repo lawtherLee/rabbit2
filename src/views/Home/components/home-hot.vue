@@ -13,11 +13,11 @@ const goods = computed<GoodsType[]>(() => {
   return useHomeStore.hotGoods.map((item) => {
     return {
       price: "0",
-      name: item.alt,
+      name: item.title,
       orderNum: null,
       id: item.id,
       picture: item.picture,
-      desc: "",
+      desc: item.alt,
     };
   });
 });
@@ -25,7 +25,13 @@ const goods = computed<GoodsType[]>(() => {
 
 <template>
   <HomePanel title="人气推荐" sub-title="人气爆款，不容错过">
-    <HomeGoods :goods="goods"></HomeGoods>
+    <template #body>
+      <HomeGoods :goods="goods">
+        <template v-slot="{ row1 }">
+          <span>{{ row1.desc }}</span>
+        </template>
+      </HomeGoods>
+    </template>
   </HomePanel>
 </template>
 
