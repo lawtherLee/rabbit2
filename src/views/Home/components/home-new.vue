@@ -2,13 +2,21 @@
 import HomePanel from "@/views/Home/components/home-panel.vue";
 import HomeGoods from "@/views/Home/components/home-goods.vue";
 import useStore from "@/store";
+import { ref } from "vue";
+import { useIntersectionObserver } from "@vueuse/core";
 
 const { useHomeStore } = useStore();
-useHomeStore.getNewGoods();
+
+const newRef = ref(null);
+useIntersectionObserver(newRef, ([{ isIntersecting }]) => {
+  if (isIntersecting) {
+    useHomeStore.getNewGoods();
+  }
+});
 </script>
 
 <template>
-  <div class="home-new">
+  <div class="home-new" ref="newRef">
     <HomePanel title="新鲜好物" sub-title="新鲜出炉 品质靠谱">
       <!--          查看更多-->
       <template #more>
