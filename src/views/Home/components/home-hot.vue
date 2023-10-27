@@ -9,9 +9,10 @@ import { useIntersectionObserver } from "@vueuse/core";
 const { useHomeStore } = useStore();
 
 const hotRef = ref(null);
-useIntersectionObserver(hotRef, ([{ isIntersecting }]) => {
+const { stop } = useIntersectionObserver(hotRef, ([{ isIntersecting }]) => {
   if (isIntersecting) {
     useHomeStore.getHotGoods();
+    stop();
   }
 });
 

@@ -2,16 +2,11 @@
 import HomePanel from "@/views/Home/components/home-panel.vue";
 import HomeGoods from "@/views/Home/components/home-goods.vue";
 import useStore from "@/store";
-import { ref } from "vue";
-import { useIntersectionObserver } from "@vueuse/core";
+import { useLazyData } from "@/hooks";
 
 const { useHomeStore } = useStore();
-
-const newRef = ref(null);
-useIntersectionObserver(newRef, ([{ isIntersecting }]) => {
-  if (isIntersecting) {
-    useHomeStore.getNewGoods();
-  }
+const newRef = useLazyData(() => {
+  useHomeStore.getNewGoods();
 });
 </script>
 
