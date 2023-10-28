@@ -21,7 +21,7 @@ const props = defineProps<{
         to="/"
         class="goods-item"
       >
-        <img :src="item.picture" alt="" />
+        <img v-lazyLoad="item.picture" alt="" />
         <p class="name ellipsis">{{ item.desc }}</p>
         <p class="desc ellipsis">{{ item.name }}</p>
         <p class="price">&yen;{{ item.price }}</p>

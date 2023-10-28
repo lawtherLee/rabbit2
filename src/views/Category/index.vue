@@ -8,6 +8,9 @@ import CategoryGoods from "@/views/Category/components/category-goods.vue";
 const route = useRoute();
 
 const { useCategoryStore, useHomeStore } = useStore();
+if (!useHomeStore.bannerList.length) {
+  useHomeStore.getBannerList();
+}
 
 // watch(
 //   () => route.params.id,
@@ -31,7 +34,11 @@ watchEffect(() => {
       <xtx-bread-item>{{ useCategoryStore.topCategory.name }}</xtx-bread-item>
     </xtx-bread>
     <!--    轮播图-->
-    <xtx-carousel :banners="useHomeStore.bannerList" style="height: 500px" />
+    <xtx-carousel
+      autoplay
+      :banners="useHomeStore.bannerList"
+      style="height: 500px"
+    />
     <!--    二级分类-->
     <category-sub />
     <category-goods

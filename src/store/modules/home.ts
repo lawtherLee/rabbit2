@@ -22,6 +22,7 @@ export default defineStore("home", {
   actions: {
     // 获取轮播图
     async getBannerList() {
+      if (this.bannerList.length) return;
       const res = await instance.get<IAxiosRes<HomeBanner[]>>("/home/banner");
       this.bannerList = res.data.result;
     },
