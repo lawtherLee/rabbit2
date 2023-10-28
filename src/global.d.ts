@@ -3,6 +3,8 @@ import XtxCarousel from "@/components/carousel";
 import XtxMore from "@/components/more/index.vue";
 import XtxBread from "@/components/bread/index.vue";
 import XtxBreadItem from "@/components/bread/item.vue";
+import XtxGoodsItem from "@/components/goodsItem/index.vue";
+
 // 定义全局类型声明
 declare module "vue" {
   export interface GlobalComponents {
@@ -12,6 +14,7 @@ declare module "vue" {
     XtxMore: typeof XtxMore;
     XtxBread: typeof XtxBread;
     XtxBreadItem: typeof XtxBreadItem;
+    XtxGoodsItem: typeof XtxGoodsItem;
   }
 }
 
