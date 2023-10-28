@@ -1,7 +1,9 @@
 import { defineStore } from "pinia";
 import request from "@/utils/request.ts";
+import instance from "@/utils/request.ts";
 import { CategoryItem, IAxiosRes } from "@/types/data";
 import { topCategory } from "@/store/constants.ts";
+import { TopCategory } from "@/types/category";
 
 const defaultCategory = topCategory.map((item) => {
   return {
@@ -12,7 +14,7 @@ export default defineStore("category", {
   state: () => {
     return {
       list: defaultCategory as CategoryItem[],
-      topCategory: [],
+      topCategory: {} as TopCategory,
     };
   },
   actions: {
@@ -39,8 +41,12 @@ export default defineStore("category", {
       if (findItem) findItem.open = open;
     },
     // 获取顶级分类
-    getTopCategory(id: string) {
-      console.log(id);
+    async getTopCategory(id: string) {
+      const res = await instance.get<IAxiosRes<TopCategory>>(
+        "/category?id=" + id,
+      );
+      console.log(res);
+      this.topCategory = res.data.result;
     },
   },
 });

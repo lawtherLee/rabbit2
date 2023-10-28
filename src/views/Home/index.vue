@@ -28,4 +28,12 @@ import HomeProduct from "@/views/Home/components/home-product.vue";
   </div>
 </template>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.page-home {
+  /deep/ .xtx-carousel {
+    .prev {
+      left: 270px;
+    }
+  }
+}
+</style>
