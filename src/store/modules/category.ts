@@ -19,7 +19,6 @@ export default defineStore("category", {
       const res = await request.get<IAxiosRes<CategoryItem[]>>(
         "/home/category/head",
       );
-      console.log(res);
       res.data.result.forEach((item) => {
         item.open = false;
       });
