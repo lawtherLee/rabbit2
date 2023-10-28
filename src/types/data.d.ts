@@ -48,3 +48,18 @@ export type HomeBrand = {
   place: string;
   type: null;
 };
+// 首页产品类型
+export type subProduct = {
+  id: string;
+  layer: number;
+  name: string;
+  parent: null;
+};
+export type HomeProduct = {
+  id: string;
+  name: string;
+  picture: string;
+  saleInfo: string;
+  children: subProduct[];
+  goods: GoodsType[];
+};
