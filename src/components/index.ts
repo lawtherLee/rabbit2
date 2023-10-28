@@ -4,8 +4,10 @@ import XtxCarousel from "@/components/carousel/index.vue";
 import XtxMore from "@/components/more/index.vue";
 import { useIntersectionObserver } from "@vueuse/core";
 import defaultImg from "@/assets/images/200.png";
+import XtxBread from "@/components/bread/index.vue";
+import XtxBreadItem from "@/components/bread/item.vue";
 
-const components = [XtxSkeleton, XtxCarousel, XtxMore];
+const components = [XtxSkeleton, XtxCarousel, XtxMore, XtxBread, XtxBreadItem];
 
 // export default function (app: App) {
 //   app.component("xtx-skeleton", XtxSkeleton);

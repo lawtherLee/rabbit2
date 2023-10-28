@@ -12,6 +12,7 @@ export default defineStore("category", {
   state: () => {
     return {
       list: defaultCategory as CategoryItem[],
+      topCategory: [],
     };
   },
   actions: {
@@ -36,6 +37,10 @@ export default defineStore("category", {
     toggleSub(id: number, open: boolean) {
       const findItem = this.list.find((item) => item.id === id);
       if (findItem) findItem.open = open;
+    },
+    // 获取顶级分类
+    getTopCategory(id: string) {
+      console.log(id);
     },
   },
 });
