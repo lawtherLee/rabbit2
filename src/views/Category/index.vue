@@ -40,8 +40,8 @@ watchEffect(() => {
       style="height: 500px"
     />
     <!--    二级分类-->
-    <category-sub />
-    <category-goods
+    <CategorySub />
+    <CategoryGoods
       v-for="item in useCategoryStore.topCategory.children"
       :key="item.id"
       :sub-category="item"

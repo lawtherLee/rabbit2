@@ -3,7 +3,7 @@ import request from "@/utils/request.ts";
 import instance from "@/utils/request.ts";
 import { CategoryItem, IAxiosRes } from "@/types/data";
 import { topCategory } from "@/store/constants.ts";
-import { TopCategory } from "@/types/category";
+import { SubCategory, TopCategory } from "@/types/category";
 
 const defaultCategory = topCategory.map((item) => {
   return {
@@ -15,6 +15,7 @@ export default defineStore("category", {
     return {
       list: defaultCategory as CategoryItem[],
       topCategory: {} as TopCategory,
+      subCategory: {} as SubCategory,
     };
   },
   actions: {
@@ -47,6 +48,14 @@ export default defineStore("category", {
       );
       console.log(res);
       this.topCategory = res.data.result;
+    },
+    // 获取二级类目详情
+    async getSubCategory(id: string) {
+      const res = await instance.get<IAxiosRes<SubCategory>>(
+        "/category/sub/filter/?id=" + id,
+      );
+      // console.log(res);
+      this.subCategory = res.data.result;
     },
   },
 });

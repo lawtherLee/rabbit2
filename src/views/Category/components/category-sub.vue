@@ -10,10 +10,10 @@ const { useCategoryStore } = useStore();
     <h3>全部分类</h3>
     <ul>
       <li v-for="item in useCategoryStore.topCategory.children" :key="item.id">
-        <a href="javascript:">
+        <router-link href="javascript:" :to="'/category/sub/' + item.id">
           <img :src="item.picture" />
           <p>{{ item.name }}</p>
-        </a>
+        </router-link>
       </li>
     </ul>
   </div>

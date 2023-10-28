@@ -8,10 +8,19 @@ export type TopCategory = {
   children: subCategory[];
 };
 // 二级分类
+export type SaleProp = {
+  id: string;
+  name: string;
+};
+export type Sale = {
+  id: string;
+  name: string;
+  properties: SaleProp[];
+};
 export type SubCategory = {
   parentName: null;
   name: string;
-  saleProperties: null;
+  saleProperties: Sale[];
   id: string;
   parentId: null;
   picture: string;
