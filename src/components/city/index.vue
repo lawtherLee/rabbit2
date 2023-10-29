@@ -4,6 +4,14 @@ import { onClickOutside } from "@vueuse/core";
 import axios from "axios";
 import { CityType } from "@/types/data";
 
+// 默认地址
+defineProps<{
+  address: string;
+}>();
+
+// 更改地址
+const emit = defineEmits(["changeAddress"]);
+
 // 控制显示隐藏
 const active = ref(false);
 const target = ref(null);
@@ -11,11 +19,13 @@ onClickOutside(target, () => (active.value = false));
 
 // 获取城市数据
 const cityList = ref<CityType[]>([]);
+const cacheList = ref<CityType[]>([]);
 const getCityList = async () => {
   const res = await axios.get<CityType[]>(
     "https://yjy-oss-files.oss-cn-zhangjiakou.aliyuncs.com/tuxian/area.json",
   );
   cityList.value = res.data;
+  cacheList.value = res.data;
 };
 getCityList();
 
@@ -41,6 +51,8 @@ const onSelectCity = ({ level, code, name, areaList }: CityType) => {
     case 2:
       selectCity.value.countryCode = code;
       selectCity.value.countryName = name;
+      active.value = false;
+      emit("changeAddress", selectCity.value);
       return;
   }
   cityList.value = areaList;
@@ -48,7 +60,7 @@ const onSelectCity = ({ level, code, name, areaList }: CityType) => {
 
 watch(active, (value) => {
   if (!value) {
-    getCityList();
+    cityList.value = cacheList.value;
   }
 });
 </script>
@@ -60,7 +72,8 @@ watch(active, (value) => {
       @click="active = !active"
       :class="active ? 'active' : ''"
     >
-      <span class="placeholder">请选择配送地址</span>
+      <span class="placeholder" v-if="address">{{ address }}</span>
+      <span class="placeholder" v-else>请选择配送地址</span>
       <span class="value"></span>
       <i class="iconfont icon-angle-down"></i>
     </div>
