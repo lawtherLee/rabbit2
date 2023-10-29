@@ -1,5 +1,5 @@
 <script lang="ts" setup name="GoodsImage">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useMouseInElement } from "@vueuse/core";
 
 defineProps<{
@@ -11,7 +11,19 @@ const active = ref(0);
 const target = ref(null);
 const { isOutside, elementX, elementY } = useMouseInElement(target);
 
-console.log(isOutside);
+const position = computed(() => {
+  let top = elementY.value - 100;
+  let left = elementX.value - 100;
+  if (left <= 0) left = 0;
+  if (left >= 200) left = 200;
+  if (top >= 200) top = 200;
+  if (top <= 0) top = 0;
+
+  return {
+    top,
+    left,
+  };
+});
 </script>
 <template>
   <div class="goods-image" v-if="goodsImg">
@@ -23,7 +35,7 @@ console.log(isOutside);
     <div class="middle" ref="target">
       <img :src="goodsImg[active]" alt="" />
       <div
-        :style="{ top: elementY + 'px', left: elementX + 'px' }"
+        :style="{ top: position.top + 'px', left: position.left + 'px' }"
         v-show="!isOutside"
         class="layer"
       ></div>
