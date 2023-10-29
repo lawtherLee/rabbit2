@@ -3,6 +3,8 @@ import { useRoute } from "vue-router";
 import useStore from "@/store";
 import GoodsImage from "@/views/GoodsDetail/components/goods-image.vue";
 import { storeToRefs } from "pinia";
+import GoodsSales from "@/views/GoodsDetail/components/goods-sales.vue";
+import GoodsName from "@/views/GoodsDetail/components/goods-name.vue";
 
 const route = useRoute();
 
@@ -13,7 +15,7 @@ goodsStore.getGoodsInfo(route.params.id as string);
 
 <template>
   <div class="goods-container">
-    <div class="container">
+    <div class="container" v-if="goods.id">
       <xtx-bread>
         <!--        面包屑-->
         <xtx-bread-item to="/">首页</xtx-bread-item>
@@ -28,8 +30,11 @@ goodsStore.getGoodsInfo(route.params.id as string);
       <div class="goods-info">
         <div class="media">
           <GoodsImage :goodsImg="goods.mainPictures"></GoodsImage>
+          <goods-sales></goods-sales>
         </div>
-        <div class="spec"></div>
+        <div class="spec">
+          <goods-name :goods="goods"></goods-name>
+        </div>
       </div>
     </div>
   </div>
