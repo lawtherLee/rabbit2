@@ -6,7 +6,7 @@ import { GoodsInfo } from "@/types/goods";
 export default defineStore("goods", {
   state: () => {
     return {
-      goods: {},
+      goods: {} as GoodsInfo,
     };
   },
   actions: {
