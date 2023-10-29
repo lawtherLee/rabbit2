@@ -1,13 +1,58 @@
 <script lang="ts" setup name="XtxCity">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { onClickOutside } from "@vueuse/core";
+import axios from "axios";
+import { CityType } from "@/types/data";
 
-console.log(123);
+// 控制显示隐藏
 const active = ref(false);
 const target = ref(null);
-
 onClickOutside(target, () => (active.value = false));
+
+// 获取城市数据
+const cityList = ref<CityType[]>([]);
+const getCityList = async () => {
+  const res = await axios.get<CityType[]>(
+    "https://yjy-oss-files.oss-cn-zhangjiakou.aliyuncs.com/tuxian/area.json",
+  );
+  cityList.value = res.data;
+};
+getCityList();
+
+// 选择城市
+const selectCity = ref({
+  provinceCode: "",
+  provinceName: "",
+  cityCode: "",
+  cityName: "",
+  countryCode: "",
+  countryName: "",
+});
+const onSelectCity = ({ level, code, name, areaList }: CityType) => {
+  switch (level) {
+    case 0:
+      selectCity.value.provinceCode = code;
+      selectCity.value.provinceName = name;
+      break;
+    case 1:
+      selectCity.value.cityCode = code;
+      selectCity.value.cityName = name;
+      break;
+    case 2:
+      selectCity.value.countryCode = code;
+      selectCity.value.countryName = name;
+      return;
+  }
+  cityList.value = areaList;
+};
+
+watch(active, (value) => {
+  if (!value) {
+    getCityList();
+  }
+});
 </script>
+
 <template>
   <div class="xtx-city" ref="target">
     <div
@@ -20,7 +65,14 @@ onClickOutside(target, () => (active.value = false));
       <i class="iconfont icon-angle-down"></i>
     </div>
     <div class="option" v-show="active">
-      <span class="ellipsis" v-for="i in 24" :key="i">北京市</span>
+      <span
+        @click="onSelectCity(item)"
+        class="ellipsis"
+        v-for="item in cityList"
+        :key="item.code"
+      >
+        {{ item.name }}
+      </span>
     </div>
   </div>
 </template>

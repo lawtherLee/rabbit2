@@ -63,3 +63,11 @@ export type HomeProduct = {
   children: subProduct[];
   goods: GoodsType[];
 };
+
+// 城市数据
+export type CityType = {
+  code: string;
+  level: number;
+  name: string;
+  areaList: CityType[];
+};
