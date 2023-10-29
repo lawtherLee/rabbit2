@@ -29,7 +29,12 @@ const position = computed(() => {
   <div class="goods-image" v-if="goodsImg">
     <div
       class="large"
-      :style="[{ backgroundImage: `url(${goodsImg[active]})` }]"
+      :style="[
+        {
+          backgroundImage: `url(${goodsImg[active]})`,
+          backgroundPosition: `-${position.left * 2}px -${position.top * 2}px`,
+        },
+      ]"
       v-show="!isOutside"
     ></div>
     <div class="middle" ref="target">
