@@ -19,7 +19,8 @@ defineProps<{
     </dl>
     <dl>
       <dt>配送</dt>
-      <dd>至</dd>
+      <dd style="margin: 0 8px">至</dd>
+      <dd><XtxCity /></dd>
     </dl>
     <dl>
       <dt>服务</dt>

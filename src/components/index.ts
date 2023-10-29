@@ -7,6 +7,7 @@ import defaultImg from "@/assets/images/200.png";
 import XtxBread from "@/components/bread/index.vue";
 import XtxBreadItem from "@/components/bread/item.vue";
 import XtxGoodsItem from "@/components/goodsItem/index.vue";
+import XtxCity from "@/components/city/index.vue";
 
 const components = [
   XtxSkeleton,
@@ -15,6 +16,7 @@ const components = [
   XtxBread,
   XtxBreadItem,
   XtxGoodsItem,
+  XtxCity,
 ];
 
 // export default function (app: App) {
