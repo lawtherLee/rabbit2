@@ -1,3 +1,15 @@
+export type SpecVal = {
+  desc: string;
+  name: string;
+  picture: string;
+  selected: boolean;
+};
+
+export type Spec = {
+  name: string;
+  values: SpecVal[];
+};
+
 // 商品模块的类型声明
 export type GoodsInfo = {
   id: string;
@@ -23,4 +35,5 @@ export type GoodsInfo = {
     id: string;
     name: string;
   }[];
+  specs: Spec[];
 };

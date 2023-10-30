@@ -5,6 +5,7 @@ import GoodsImage from "@/views/GoodsDetail/components/goods-image.vue";
 import { storeToRefs } from "pinia";
 import GoodsSales from "@/views/GoodsDetail/components/goods-sales.vue";
 import GoodsName from "@/views/GoodsDetail/components/goods-name.vue";
+import GoodsSku from "@/views/GoodsDetail/components/goods-sku.vue";
 
 const route = useRoute();
 
@@ -34,6 +35,8 @@ goodsStore.getGoodsInfo(route.params.id as string);
         </div>
         <div class="spec">
           <goods-name :goods="goods"></goods-name>
+          <!--          规格-->
+          <goods-sku :goods="goods"></goods-sku>
         </div>
       </div>
     </div>

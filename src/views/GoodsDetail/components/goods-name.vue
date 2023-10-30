@@ -1,9 +1,9 @@
 <script lang="ts" setup name="GoodName">
-import { GoodsType } from "@/types/data";
 import { ref } from "vue";
+import { GoodsInfo } from "@/types/goods";
 
 defineProps<{
-  goods: GoodsType;
+  goods: GoodsInfo;
 }>();
 
 const userAddress = ref("浙江省杭州市上城区");
@@ -19,7 +19,7 @@ const onChangeAddress = (address: any) => {
   <p class="g-desc">{{ goods.desc }}</p>
   <p class="g-price">
     <span>{{ goods.price }}</span>
-    <span>{{ goods.orderNum }}</span>
+    <span>{{ goods.oldPrice }}</span>
   </p>
   <div class="g-service">
     <dl>

@@ -18,9 +18,9 @@ export type CategoryItem = {
 export type GoodsType = {
   price: string;
   name: string;
-  orderNum: null;
+  orderNum?: null;
   id: string;
-  picture: string;
+  picture?: string;
   desc: string;
 };
 
