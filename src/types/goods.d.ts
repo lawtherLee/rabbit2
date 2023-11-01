@@ -36,4 +36,14 @@ export type GoodsInfo = {
     name: string;
   }[];
   specs: Spec[];
+  skus: Sku[];
+};
+
+export type Sku = {
+  id: string;
+  inventory: number;
+  oldPrice: string;
+  price: string;
+  skuCode: string;
+  specs: { name: string; valueName: string }[];
 };

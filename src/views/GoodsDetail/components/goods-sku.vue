@@ -1,10 +1,11 @@
 <script setup lang="ts" name="GoodsSku">
-import { GoodsInfo, SpecVal } from "@/types/goods";
+import { GoodsInfo, Sku, SpecVal } from "@/types/goods";
 
-defineProps<{
+const props = defineProps<{
   goods: GoodsInfo;
 }>();
 
+// 切换选中状态
 const changeSelected = (row: SpecVal, values: SpecVal[]) => {
   if (row.selected) {
     row.selected = false;
@@ -15,6 +16,13 @@ const changeSelected = (row: SpecVal, values: SpecVal[]) => {
     });
   }
 };
+
+// sku禁用状态
+// 1.筛选有效sku
+const optionalSku = () => {
+  return props.goods.skus.filter((item: Sku) => item.inventory);
+};
+console.log(optionalSku());
 </script>
 <template>
   <div class="goods-sku">
