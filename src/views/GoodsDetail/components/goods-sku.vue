@@ -1,5 +1,6 @@
 <script setup lang="ts" name="GoodsSku">
 import { GoodsInfo, Sku, SpecVal } from "@/types/goods";
+import bwPowerSet from "@/utils/power-set.ts";
 
 const props = defineProps<{
   goods: GoodsInfo;
@@ -22,8 +23,20 @@ const changeSelected = (row: SpecVal, values: SpecVal[]) => {
 const optionalSku = () => {
   return props.goods.skus.filter((item: Sku) => item.inventory);
 };
-console.log(optionalSku());
+const pathMap: any = {};
+optionalSku().forEach((item: Sku) => {
+  const arr = item.specs.map((spec) => spec.valueName);
+  // 处理arr的幂集算法
+  console.log(bwPowerSet(arr));
+  // 将这些规格情况放入路径字典
+  bwPowerSet(arr).forEach((spec) => {
+    const pathKey = spec.join("+");
+    pathMap[pathKey] = true;
+  });
+});
+console.log(pathMap);
 </script>
+
 <template>
   <div class="goods-sku">
     <dl v-for="spec in goods.specs">
