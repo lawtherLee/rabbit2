@@ -3,6 +3,7 @@ export type SpecVal = {
   name: string;
   picture: string;
   selected: boolean;
+  disabled: boolean;
 };
 
 export type Spec = {

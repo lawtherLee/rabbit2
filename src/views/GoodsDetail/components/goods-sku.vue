@@ -8,6 +8,7 @@ const props = defineProps<{
 
 // 切换选中状态
 const changeSelected = (row: SpecVal, values: SpecVal[]) => {
+  if (row.disabled) return;
   if (row.selected) {
     row.selected = false;
   } else {
@@ -23,6 +24,7 @@ const changeSelected = (row: SpecVal, values: SpecVal[]) => {
 const optionalSku = () => {
   return props.goods.skus.filter((item: Sku) => item.inventory);
 };
+
 const pathMap: any = {};
 optionalSku().forEach((item: Sku) => {
   const arr = item.specs.map((spec) => spec.valueName);
@@ -34,7 +36,18 @@ optionalSku().forEach((item: Sku) => {
     pathMap[pathKey] = true;
   });
 });
-console.log(pathMap);
+
+// 默认选中：根据每一项的值去路径字典找
+const specBtnDisabled = () => {
+  console.log(props.goods.specs);
+  props.goods.specs.forEach((spec) => {
+    spec.values.forEach((item) => {
+      const isSpec = pathMap[item.name];
+      item.disabled = !isSpec;
+    });
+  });
+};
+specBtnDisabled();
 </script>
 
 <template>
@@ -45,7 +58,7 @@ console.log(pathMap);
         <template v-for="item in spec.values">
           <img
             v-if="item.picture"
-            :class="{ selected: item.selected }"
+            :class="{ disabled: item.disabled, selected: item.selected }"
             :src="item.picture"
             alt=""
             @click="changeSelected(item, spec.values)"
@@ -54,7 +67,7 @@ console.log(pathMap);
           <span
             @click="changeSelected(item, spec.values)"
             v-else
-            :class="{ selected: item.selected }"
+            :class="{ disabled: item.disabled, selected: item.selected }"
           >
             {{ item.name }}
           </span>
