@@ -17,9 +17,7 @@ const changeSelected = (row: SpecVal, values: SpecVal[]) => {
       row.selected = true;
     });
   }
-
-  const selectedArr = getSelected();
-  console.log(selectedArr);
+  updateSpecBtnDisabled();
 };
 
 // sku禁用状态
@@ -41,11 +39,17 @@ optionalSku().forEach((item: Sku) => {
 });
 
 // 默认选中：根据每一项的值去路径字典找
-const specBtnDisabled = () => {
-  console.log(props.goods.specs);
-  props.goods.specs.forEach((spec) => {
+const updateSpecBtnDisabled = () => {
+  const selectedArr = getSelected();
+  console.log(selectedArr);
+
+  props.goods.specs.forEach((spec, index) => {
     spec.values.forEach((item) => {
-      const isSpec = pathMap[item.name];
+      const tempArr = [...selectedArr];
+      tempArr[index] = item.name;
+
+      const pathKey = tempArr.filter((i) => i).join("+");
+      const isSpec = pathMap[pathKey];
       item.disabled = !isSpec;
     });
   });
@@ -64,7 +68,7 @@ const getSelected = () => {
   });
   return selectedArr;
 };
-specBtnDisabled();
+updateSpecBtnDisabled();
 </script>
 
 <template>
