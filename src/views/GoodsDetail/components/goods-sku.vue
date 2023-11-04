@@ -17,6 +17,9 @@ const changeSelected = (row: SpecVal, values: SpecVal[]) => {
       row.selected = true;
     });
   }
+
+  const selectedArr = getSelected();
+  console.log(selectedArr);
 };
 
 // sku禁用状态
@@ -46,6 +49,20 @@ const specBtnDisabled = () => {
       item.disabled = !isSpec;
     });
   });
+};
+
+// 获取当前选中状态
+const getSelected = () => {
+  const selectedArr: string[] = [];
+  props.goods.specs.forEach((item, index) => {
+    selectedArr.push("");
+    item.values.forEach((spec) => {
+      if (spec.selected) {
+        selectedArr[index] = spec.name;
+      }
+    });
+  });
+  return selectedArr;
 };
 specBtnDisabled();
 </script>
