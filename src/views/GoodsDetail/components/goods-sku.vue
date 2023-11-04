@@ -4,7 +4,29 @@ import bwPowerSet from "@/utils/power-set.ts";
 
 const props = defineProps<{
   goods: GoodsInfo;
+  skuId: string;
 }>();
+
+// 默认选中状态
+const initSelected = () => {
+  // console.log(props.goods.id);
+  // 根据skuId获取对应sku
+  const sku = props.goods.skus.find((item) => item.id === props.skuId);
+  // console.log(sku?.specs);
+  // 获取sku中的规格
+  const selectedSpec = sku?.specs.map((item) => item.valueName);
+  // console.log(selectedSpec); // [蓝色，中国，10]
+  props.goods.specs.forEach((item) => {
+    item.values.some((val) => {
+      const isSelected = selectedSpec?.includes(val.name);
+      if (isSelected) {
+        val.selected = true;
+      }
+      return isSelected;
+    });
+  });
+};
+initSelected();
 
 // 切换选中状态
 const changeSelected = (row: SpecVal, values: SpecVal[]) => {
@@ -30,7 +52,7 @@ const pathMap: any = {};
 optionalSku().forEach((item: Sku) => {
   const arr = item.specs.map((spec) => spec.valueName);
   // 处理arr的幂集算法
-  console.log(bwPowerSet(arr));
+  // console.log(bwPowerSet(arr));
   // 将这些规格情况放入路径字典
   bwPowerSet(arr).forEach((spec) => {
     const pathKey = spec.join("+");
@@ -38,7 +60,7 @@ optionalSku().forEach((item: Sku) => {
   });
 });
 
-// 默认选中：根据每一项的值去路径字典找
+// 默认禁用：根据每一项的值去路径字典找
 const updateSpecBtnDisabled = () => {
   const selectedArr = getSelected();
   console.log(selectedArr);
@@ -49,13 +71,14 @@ const updateSpecBtnDisabled = () => {
       tempArr[index] = item.name;
 
       const pathKey = tempArr.filter((i) => i).join("+");
+      // 去路径字典查找
       const isSpec = pathMap[pathKey];
       item.disabled = !isSpec;
     });
   });
 };
 
-// 获取当前选中状态
+// 获取当前选中状态（将选中的放到数组对应的位置）
 const getSelected = () => {
   const selectedArr: string[] = [];
   props.goods.specs.forEach((item, index) => {

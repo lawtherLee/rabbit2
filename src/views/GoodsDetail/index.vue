@@ -36,7 +36,7 @@ goodsStore.getGoodsInfo(route.params.id as string);
         <div class="spec">
           <goods-name :goods="goods"></goods-name>
           <!--          规格-->
-          <goods-sku :goods="goods"></goods-sku>
+          <goods-sku :goods="goods" skuId="1369155862131642369"></goods-sku>
         </div>
       </div>
     </div>
