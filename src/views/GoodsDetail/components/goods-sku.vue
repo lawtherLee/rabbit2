@@ -39,9 +39,26 @@ const changeSelected = (row: SpecVal, values: SpecVal[]) => {
       row.selected = true;
     });
   }
+  // 更新点击后的禁用状态
   updateSpecBtnDisabled();
+  // 如果满足sku将skuId传到父组件
+  subSku();
 };
 
+// 提交sku
+const subSku = () => {
+  const selectedArr = getSelected().filter((v) => v);
+  // 确保所有规格都选了
+  if (selectedArr.length !== props.goods.specs.length) return;
+
+  props.goods.skus.forEach((sku) => {
+    const findItem = sku.specs.every((spec, index) => {
+      return spec.valueName === selectedArr[index];
+    });
+    if (!findItem) return;
+    console.log(sku.id);
+  });
+};
 // sku禁用状态
 // 1.筛选有效sku
 const optionalSku = () => {
@@ -91,6 +108,7 @@ const getSelected = () => {
   });
   return selectedArr;
 };
+
 updateSpecBtnDisabled();
 </script>
 
