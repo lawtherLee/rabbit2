@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import type { PropType } from "vue";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { getHotAPI } from "@/api/goods.ts";
+import XtxGoodsItem from "@/components/goodsItem/index.vue";
+import { GoodsType } from "@/types/data";
 
 const route = useRoute();
 const props = defineProps({
@@ -24,6 +26,7 @@ onMounted(() => {
 });
 
 // 获取热销榜
+const hotGoods = ref<GoodsType[]>([]);
 const getHotsList = async () => {
   const id = route.params.id;
   const limit = 3;
@@ -31,6 +34,7 @@ const getHotsList = async () => {
   console.log(id, limit, type);
   const res = await getHotAPI(id as string, limit, type);
   console.log(res);
+  hotGoods.value = res.data.result;
 };
 </script>
 
@@ -39,7 +43,7 @@ const getHotsList = async () => {
     <h3>{{ titleObj[props.type] }}</h3>
     <div class="goods-list">
       <!-- 商品区块 -->
-      1
+      <XtxGoodsItem v-for="item in hotGoods" :goods="item" :key="item.id" />
     </div>
   </div>
 </template>
