@@ -38,6 +38,7 @@ export type GoodsInfo = {
   }[];
   specs: Spec[];
   skus: Sku[];
+  details: GoodsDetail;
 };
 
 export type SkuSpec = {
@@ -52,4 +53,12 @@ export type Sku = {
   price: string;
   skuCode: string;
   specs: SkuSpec[];
+};
+
+type GoodsDetail = {
+  pictures: string[];
+  properties: {
+    name: string;
+    value: string;
+  }[];
 };

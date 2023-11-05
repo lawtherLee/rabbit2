@@ -8,6 +8,8 @@ import GoodsName from "@/views/GoodsDetail/components/goods-name.vue";
 import GoodsSku from "@/views/GoodsDetail/components/goods-sku.vue";
 import { Sku } from "@/types/goods";
 import { ref } from "vue";
+import GoodsDetailInfo from "@/views/GoodsDetail/components/goods-detail-info.vue";
+import GoodsHot from "@/views/GoodsDetail/components/goods-hot.vue";
 
 const route = useRoute();
 
@@ -64,6 +66,22 @@ const addShopCar = () => {};
           </XtxButton>
         </div>
       </div>
+
+      <div class="goods-footer">
+        <div class="goods-article">
+          <!-- 商品+评价 -->
+          <div class="goods-tabs">
+            <!-- 商品详情 -->
+            <GoodsDetailInfo :goods="goods" />
+          </div>
+        </div>
+        <!-- 24热榜+专题推荐 -->
+        <div class="goods-aside">
+          <GoodsHot :type="1" />
+          <GoodsHot :type="2" />
+          <GoodsHot :type="3" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -81,6 +99,18 @@ const addShopCar = () => {};
   .spec {
     flex: 1;
     padding: 30px 30px 30px 0;
+  }
+}
+.goods-footer {
+  display: flex;
+  margin-top: 20px;
+  .goods-article {
+    width: 940px;
+    margin-right: 20px;
+  }
+  .goods-aside {
+    width: 280px;
+    min-height: 1000px;
   }
 }
 </style>
