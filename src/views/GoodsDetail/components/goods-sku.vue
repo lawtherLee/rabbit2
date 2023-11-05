@@ -7,6 +7,8 @@ const props = defineProps<{
   skuId: string;
 }>();
 
+const emit = defineEmits(["getSku"]);
+
 // 默认选中状态
 const initSelected = () => {
   // console.log(props.goods.id);
@@ -57,6 +59,7 @@ const subSku = () => {
     });
     if (!findItem) return;
     console.log(sku.id);
+    emit("getSku", sku);
   });
 };
 // sku禁用状态

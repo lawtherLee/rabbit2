@@ -6,12 +6,19 @@ import { storeToRefs } from "pinia";
 import GoodsSales from "@/views/GoodsDetail/components/goods-sales.vue";
 import GoodsName from "@/views/GoodsDetail/components/goods-name.vue";
 import GoodsSku from "@/views/GoodsDetail/components/goods-sku.vue";
+import { Sku } from "@/types/goods";
 
 const route = useRoute();
 
 const { goodsStore } = useStore();
 const { goods } = storeToRefs(goodsStore); // 解决结构丢失响应式
 goodsStore.getGoodsInfo(route.params.id as string);
+
+const onGetSku = (sku: Sku) => {
+  console.log(sku);
+  goods.value.price = sku.price;
+  goods.value.oldPrice = sku.oldPrice;
+};
 </script>
 
 <template>
@@ -36,7 +43,11 @@ goodsStore.getGoodsInfo(route.params.id as string);
         <div class="spec">
           <goods-name :goods="goods"></goods-name>
           <!--          规格-->
-          <goods-sku :goods="goods" skuId="1369155862131642369"></goods-sku>
+          <goods-sku
+            @get-sku="onGetSku"
+            :goods="goods"
+            skuId="1369155862131642369"
+          ></goods-sku>
         </div>
       </div>
     </div>
