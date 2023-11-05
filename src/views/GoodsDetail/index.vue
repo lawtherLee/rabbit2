@@ -7,6 +7,7 @@ import GoodsSales from "@/views/GoodsDetail/components/goods-sales.vue";
 import GoodsName from "@/views/GoodsDetail/components/goods-name.vue";
 import GoodsSku from "@/views/GoodsDetail/components/goods-sku.vue";
 import { Sku } from "@/types/goods";
+import { ref } from "vue";
 
 const route = useRoute();
 
@@ -19,6 +20,9 @@ const onGetSku = (sku: Sku) => {
   goods.value.price = sku.price;
   goods.value.oldPrice = sku.oldPrice;
 };
+
+// 购买数量
+const count = ref(1);
 </script>
 
 <template>
@@ -47,7 +51,8 @@ const onGetSku = (sku: Sku) => {
             @get-sku="onGetSku"
             :goods="goods"
             skuId="1369155862131642369"
-          ></goods-sku>
+          />
+          <XtxNumbox v-model:buyCount="count" :isShowLabel="true" />
         </div>
       </div>
     </div>

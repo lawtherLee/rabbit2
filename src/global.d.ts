@@ -5,6 +5,7 @@ import XtxBread from "@/components/bread/index.vue";
 import XtxBreadItem from "@/components/bread/item.vue";
 import XtxGoodsItem from "@/components/goodsItem/index.vue";
 import XtxCity from "@/components/city/index.vue";
+import XtxNumbox from "@/components/number/index.vue";
 
 // 定义全局类型声明
 declare module "vue" {
@@ -17,6 +18,7 @@ declare module "vue" {
     XtxBreadItem: typeof XtxBreadItem;
     XtxGoodsItem: typeof XtxGoodsItem;
     XtxCity: typeof XtxCity;
+    XtxNumbox: typeof XtxNumbox;
   }
 }
 

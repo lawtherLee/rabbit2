@@ -8,6 +8,7 @@ import XtxBread from "@/components/bread/index.vue";
 import XtxBreadItem from "@/components/bread/item.vue";
 import XtxGoodsItem from "@/components/goodsItem/index.vue";
 import XtxCity from "@/components/city/index.vue";
+import XtxNumbox from "@/components/number/index.vue";
 
 const components = [
   XtxSkeleton,
@@ -17,6 +18,7 @@ const components = [
   XtxBreadItem,
   XtxGoodsItem,
   XtxCity,
+  XtxNumbox,
 ];
 
 // export default function (app: App) {
