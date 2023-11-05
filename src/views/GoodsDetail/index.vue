@@ -23,6 +23,8 @@ const onGetSku = (sku: Sku) => {
 
 // 购买数量
 const count = ref(1);
+
+const addShopCar = () => {};
 </script>
 
 <template>
@@ -53,6 +55,13 @@ const count = ref(1);
             skuId="1369155862131642369"
           />
           <XtxNumbox v-model:buyCount="count" :isShowLabel="true" />
+          <XtxButton
+            @click="addShopCar"
+            style="margin: 10px 3px"
+            size="middle"
+            type="primary"
+            >加入购物车
+          </XtxButton>
         </div>
       </div>
     </div>

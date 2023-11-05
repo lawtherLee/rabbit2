@@ -1,17 +1,23 @@
 <script lang="ts" setup name="XtxNumbox">
 //
-const props = defineProps<{
+const {
+  min = 1,
+  isShowLabel,
+  buyCount,
+} = defineProps<{
   isShowLabel: boolean;
   buyCount: number;
+  min?: number;
 }>();
 
 const emit = defineEmits(["update:buyCount"]);
 const subCount = () => {
-  emit("update:buyCount", props.buyCount - 1);
+  if (buyCount <= min) return;
+  emit("update:buyCount", buyCount - 1);
 };
 
 const addCount = () => {
-  emit("update:buyCount", props.buyCount + 1);
+  emit("update:buyCount", buyCount + 1);
 };
 </script>
 <template>
