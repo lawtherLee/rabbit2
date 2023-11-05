@@ -2,6 +2,7 @@
 import LoginHeader from "./components/login-header.vue";
 import LoginFooter from "./components/login-footer.vue";
 import { ref } from "vue";
+import LoginForm from "@/views/Login/components/login-form.vue";
 
 const loginActive = ref<"account" | "qrcode">("account");
 </script>
@@ -23,6 +24,16 @@ const loginActive = ref<"account" | "qrcode">("account");
           >扫码登录</a
         >
       </nav>
+
+      <!-- 表单 -->
+      <div v-if="loginActive === 'account'" class="account-box">
+        <login-form />
+      </div>
+      <!-- 二维码 -->
+      <div v-else class="qrcode-box">
+        <img src="@/assets/images/qrcode.jpg" alt="" />
+        <p>打开 <a href="javascript:">小兔鲜App</a> 扫码登录</p>
+      </div>
     </div>
   </section>
   <LoginFooter />
@@ -62,6 +73,18 @@ const loginActive = ref<"account" | "qrcode">("account");
         &.active {
           color: @xtxColor;
           font-weight: bold;
+        }
+      }
+    }
+    // 二维码容器.wrapper 内部
+    .qrcode-box {
+      text-align: center;
+      padding-top: 40px;
+      p {
+        margin-top: 20px;
+        a {
+          color: @xtxColor;
+          font-size: 16px;
         }
       }
     }
