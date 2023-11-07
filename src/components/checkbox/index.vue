@@ -3,10 +3,11 @@ const props = defineProps<{
   modelValue: boolean;
 }>();
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "change"]);
 
 const change = () => {
   emit("update:modelValue", !props.modelValue);
+  emit("change");
 };
 </script>
 
@@ -14,7 +15,7 @@ const change = () => {
   <div class="xtx-checkbox" @click="change">
     <i v-if="modelValue" class="iconfont icon-checked"></i>
     <i v-else class="iconfont icon-unchecked"></i>
-    <span><slot></slot></span>
+    <span><slot /></span>
   </div>
 </template>
 
