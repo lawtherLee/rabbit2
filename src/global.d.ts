@@ -8,6 +8,7 @@ import XtxCity from "@/components/city/index.vue";
 import XtxNumbox from "@/components/number/index.vue";
 import XtxButton from "@/components/button/index.vue";
 import XtxCheckbox from "@/components/checkbox/index.vue";
+import XtxMessage from "@/components/message/index.vue";
 
 // 定义全局类型声明
 declare module "vue" {
@@ -23,6 +24,7 @@ declare module "vue" {
     XtxNumbox: typeof XtxNumbox;
     XtxButton: typeof XtxButton;
     XtxCheckbox: typeof XtxCheckbox;
+    XtxMessage: typeof XtxMessage;
   }
 }
 
