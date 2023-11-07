@@ -2,6 +2,9 @@
 import { ref } from "vue";
 
 const loginType = ref<"account" | "mobile">("account");
+
+// 控制复选框状态
+const agree = ref(true);
 </script>
 <template>
   <div class="account-box">
@@ -53,7 +56,7 @@ const loginType = ref<"account" | "mobile">("account");
       </template>
       <div class="form-item">
         <div class="agree">
-          <span>我已同意</span>
+          <XtxCheckbox v-model="agree">我同意</XtxCheckbox>
           <a href="javascript:">《隐私条款》</a>
           <span>和</span>
           <a href="javascript:">《服务条款》</a>
