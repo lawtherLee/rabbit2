@@ -635,10 +635,23 @@ tslib@^2.3.0:
   resolved "https://registry.npmmirror.com/tslib/-/tslib-2.6.2.tgz#703ac29425e7b37cd6fd456e92404d46d1f3e4ae"
   integrity sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==
 
+type-fest@^4.3.1:
+  version "4.6.0"
+  resolved "https://registry.npmmirror.com/type-fest/-/type-fest-4.6.0.tgz#9c575f7e20530defef4f9cdc5e2c85d6e4ea0fc9"
+  integrity sha512-rLjWJzQFOq4xw7MgJrCZ6T1jIOvvYElXT12r+y0CC6u67hegDHaxcPqb2fZHOGlqxugGQPNB1EnTezjBetkwkw==
+
 typescript@^5.0.2:
   version "5.2.2"
   resolved "https://registry.npmmirror.com/typescript/-/typescript-5.2.2.tgz#5ebb5e5a5b75f085f22bc3f8460fba308310fa78"
   integrity sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==
+
+vee-validate@^4.11.8:
+  version "4.11.8"
+  resolved "https://registry.npmmirror.com/vee-validate/-/vee-validate-4.11.8.tgz#396b00c247af65714926a53a2e7e5e76725d1b92"
+  integrity sha512-ZuVpw0axWYBM3aVTD/bm94hcWHumqeUgNjptOqfBT0gyqyHaGYCrm0tSD/0bygEbWUDwEPJOQaEKaUGM82j8TQ==
+  dependencies:
+    "@vue/devtools-api" "^6.5.0"
+    type-fest "^4.3.1"
 
 vite-plugin-vue-setup-extend@^0.4.0:
   version "0.4.0"
