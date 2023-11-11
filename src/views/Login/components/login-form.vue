@@ -1,7 +1,12 @@
 <script lang="ts" setup name="LoginForm">
 import { ref } from "vue";
 import { useField, useForm } from "vee-validate";
+import useStore from "@/store";
+import { useRouter } from "vue-router";
+import Message from "@/components/message/index.ts";
 
+const router = useRouter();
+const { userStore } = useStore();
 const loginType = ref<"account" | "mobile">("account");
 
 // 控制复选框状态
@@ -9,6 +14,7 @@ const loginType = ref<"account" | "mobile">("account");
 
 // 定义校验
 const { validate } = useForm({
+  // 校验规则
   validationSchema: {
     account: (value: string) => {
       // 校验的value值
@@ -30,19 +36,34 @@ const { validate } = useForm({
       return true;
     },
   },
+  // 默认值
+  initialValues: {
+    account: "xiaotuxian001",
+    password: "123456",
+    isAgree: true,
+  },
 });
 
 // 创建校验数据
-const { value: account, errorMessage: accountErr } = useField("account");
-const { value: password, errorMessage: passwordErr } = useField("password");
+const { value: account, errorMessage: accountErr } =
+  useField<string>("account");
+const { value: password, errorMessage: passwordErr } =
+  useField<string>("password");
 const { value: isAgree, errorMessage: isAgreeErr } =
   useField<boolean>("isAgree");
 
 // 点击登录
 const onLogin = async () => {
   const res = await validate();
-  console.log(res);
+  // console.log(res);
   if (!res.valid) return false;
+  try {
+    await userStore.accountLogin(password.value, account.value);
+    Message.success("登录成功", 2000);
+    await router.push("/");
+  } catch (err) {
+    Message.error("用户名或密码错误", 2000);
+  }
 };
 </script>
 
