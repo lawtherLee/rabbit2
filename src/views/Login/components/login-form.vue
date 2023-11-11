@@ -120,12 +120,23 @@ const onLogin = async () => {
 
 // 发送验证码
 const mobileRef = ref<HTMLInputElement | null>(null);
+let time = ref(0);
+let timer = -1;
 const sendCode = async () => {
+  if (time.value > 0) return;
   const { valid: mobileValid } = await mobileValidate();
   if (!mobileValid) {
     return mobileRef.value?.focus();
   }
   await userStore.getCode(mobile.value);
+  Message.success("发送成功");
+  time.value = 60;
+  timer = setInterval(() => {
+    time.value--;
+    if (time.value === 0) {
+      clearInterval(timer);
+    }
+  }, 1000);
 };
 </script>
 
@@ -198,7 +209,9 @@ const sendCode = async () => {
           <div class="input">
             <i class="iconfont icon-code"></i>
             <input type="password" placeholder="请输入验证码" v-model="code" />
-            <span class="code" @click="sendCode">发送验证码</span>
+            <span class="code" @click="sendCode">
+              {{ time ? time + "s" : "发送验证码" }}
+            </span>
           </div>
           <div class="error" v-show="codeErr">
             <i class="iconfont icon-warning" />
