@@ -4,6 +4,7 @@ import { useField, useForm } from "vee-validate";
 import useStore from "@/store";
 import { useRouter } from "vue-router";
 import Message from "@/components/message/index.ts";
+import { useCountDown } from "@/hooks";
 
 const router = useRouter();
 const { userStore } = useStore();
@@ -120,23 +121,27 @@ const onLogin = async () => {
 
 // 发送验证码
 const mobileRef = ref<HTMLInputElement | null>(null);
-let time = ref(0);
-let timer = -1;
+// let time = ref(0);
+// let timer = -1;
+const { time, start } = useCountDown(60);
+
 const sendCode = async () => {
   if (time.value > 0) return;
+
   const { valid: mobileValid } = await mobileValidate();
   if (!mobileValid) {
     return mobileRef.value?.focus();
   }
   await userStore.getCode(mobile.value);
   Message.success("发送成功");
-  time.value = 60;
-  timer = setInterval(() => {
-    time.value--;
-    if (time.value === 0) {
-      clearInterval(timer);
-    }
-  }, 1000);
+  start();
+  // time.value = 60;
+  // timer = setInterval(() => {
+  //   time.value--;
+  //   if (time.value === 0) {
+  //     clearInterval(timer);
+  //   }
+  // }, 1000);
 };
 </script>
 
