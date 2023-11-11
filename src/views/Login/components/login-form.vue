@@ -9,11 +9,14 @@ const router = useRouter();
 const { userStore } = useStore();
 const loginType = ref<"account" | "mobile">("account");
 
-// 控制复选框状态
-// const agree = ref(true);
+// 点击切换登录方式
+const onCheckLogin = () => {
+  loginType.value = loginType.value === "account" ? "mobile" : "account";
+  resetForm(); // 重制表单
+};
 
-// 定义校验
-const { validate } = useForm({
+// 账号登录定义校验
+const { validate, resetForm } = useForm({
   // 校验规则
   validationSchema: {
     account: (value: string) => {
@@ -35,6 +38,16 @@ const { validate } = useForm({
       if (!value) return "请同意隐私条款";
       return true;
     },
+    mobile: (value: string) => {
+      if (!value) return "请输入手机号";
+      if (!/^1[3-9]\d{9}$/.test(value)) return "手机号格式错误";
+      return true;
+    },
+    code: (value: string) => {
+      if (!value) return "请输入验证码";
+      if (!/^\d{6}$/.test(value)) return "验证码格式错误";
+      return true;
+    },
   },
   // 默认值
   initialValues: {
@@ -45,18 +58,57 @@ const { validate } = useForm({
 });
 
 // 创建校验数据
-const { value: account, errorMessage: accountErr } =
-  useField<string>("account");
-const { value: password, errorMessage: passwordErr } =
-  useField<string>("password");
-const { value: isAgree, errorMessage: isAgreeErr } =
-  useField<boolean>("isAgree");
+const {
+  value: account,
+  errorMessage: accountErr,
+  validate: accountValidate,
+} = useField<string>("account");
+const {
+  value: password,
+  errorMessage: passwordErr,
+  validate: passwordValidate,
+} = useField<string>("password");
+const {
+  value: isAgree,
+  errorMessage: isAgreeErr,
+  validate: isAgreeValidate,
+} = useField<boolean>("isAgree");
+
+// 短信登录定义校验
+// const { validate: mobileValidate } = useForm({
+//   validationSchema: {
+//     mobile: (value: string) => {
+//       if (!value) return "请输入手机号";
+//       if (!/^1[3-9]\d{9}$/.test(value)) return "手机号格式错误";
+//       return true;
+//     },
+//     code: (value: string) => {
+//       if (!value) return "请输入验证码";
+//       if (!/^\d{6}$/.test(value)) return "验证码格式错误";
+//       return true;
+//     },
+//   },
+// });
+const {
+  value: mobile,
+  errorMessage: mobileErr,
+  validate: mobileValidate,
+} = useField<string>("mobile");
+const {
+  value: code,
+  errorMessage: codeErr,
+  validate: codeValidate,
+} = useField<string>("code");
 
 // 点击登录
 const onLogin = async () => {
-  const res = await validate();
-  // console.log(res);
-  if (!res.valid) return false;
+  // const res = await validate();
+  // if (!res.valid) return false;
+
+  const { valid: accountValid } = await accountValidate();
+  const { valid: passwordValid } = await passwordValidate();
+  const { valid: isAgreeValid } = await isAgreeValidate();
+  if (!accountValid || !passwordValid || !isAgreeValid) return;
   try {
     await userStore.accountLogin(password.value, account.value);
     Message.success("登录成功", 2000);
@@ -70,10 +122,7 @@ const onLogin = async () => {
 <template>
   <div class="account-box">
     <div class="toggle">
-      <a
-        href="javascript:"
-        @click="loginType = loginType === 'account' ? 'mobile' : 'account'"
-      >
+      <a href="javascript:" @click="onCheckLogin">
         <i
           :class="{
             'icon-user': loginType === 'account',
@@ -123,14 +172,22 @@ const onLogin = async () => {
         <div class="form-item">
           <div class="input">
             <i class="iconfont icon-user"></i>
-            <input type="text" placeholder="请输入手机号" />
+            <input type="text" placeholder="请输入手机号" v-model="mobile" />
+          </div>
+          <div class="error" v-show="mobileErr">
+            <i class="iconfont icon-warning" />
+            {{ mobileErr }}
           </div>
         </div>
         <div class="form-item">
           <div class="input">
             <i class="iconfont icon-code"></i>
-            <input type="password" placeholder="请输入验证码" />
+            <input type="password" placeholder="请输入验证码" v-model="code" />
             <span class="code">发送验证码</span>
+          </div>
+          <div class="error" v-show="codeErr">
+            <i class="iconfont icon-warning" />
+            {{ codeErr }}
           </div>
         </div>
       </template>
