@@ -117,6 +117,16 @@ const onLogin = async () => {
     Message.error("用户名或密码错误", 2000);
   }
 };
+
+// 发送验证码
+const mobileRef = ref<HTMLInputElement | null>(null);
+const sendCode = async () => {
+  const { valid: mobileValid } = await mobileValidate();
+  if (!mobileValid) {
+    return mobileRef.value?.focus();
+  }
+  await userStore.getCode(mobile.value);
+};
 </script>
 
 <template>
@@ -172,7 +182,12 @@ const onLogin = async () => {
         <div class="form-item">
           <div class="input">
             <i class="iconfont icon-user"></i>
-            <input type="text" placeholder="请输入手机号" v-model="mobile" />
+            <input
+              ref="mobileRef"
+              type="text"
+              placeholder="请输入手机号"
+              v-model="mobile"
+            />
           </div>
           <div class="error" v-show="mobileErr">
             <i class="iconfont icon-warning" />
@@ -183,7 +198,7 @@ const onLogin = async () => {
           <div class="input">
             <i class="iconfont icon-code"></i>
             <input type="password" placeholder="请输入验证码" v-model="code" />
-            <span class="code">发送验证码</span>
+            <span class="code" @click="sendCode">发送验证码</span>
           </div>
           <div class="error" v-show="codeErr">
             <i class="iconfont icon-warning" />

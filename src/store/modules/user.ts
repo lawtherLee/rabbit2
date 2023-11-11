@@ -20,5 +20,14 @@ export default defineStore("user", {
       console.log(res);
       this.profile = res.data.result;
     },
+
+    // 获取验证码
+    async getCode(mobile: string) {
+      await instance.get("/login/code", {
+        params: {
+          mobile,
+        },
+      });
+    },
   },
 });
