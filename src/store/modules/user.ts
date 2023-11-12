@@ -2,11 +2,12 @@ import { defineStore } from "pinia";
 import instance from "@/utils/request.ts";
 import { IAxiosRes } from "@/types/data";
 import { Profile } from "@/types/user.ts";
+import { getProfile, setProfile } from "@/utils/storage.ts";
 
 export default defineStore("user", {
   state: () => {
     return {
-      profile: {} as Profile,
+      profile: getProfile() as Profile,
     };
   },
   actions: {
@@ -19,6 +20,7 @@ export default defineStore("user", {
       });
       console.log(res);
       this.profile = res.data.result;
+      setProfile(res.data.result);
     },
 
     // 获取验证码
@@ -38,6 +40,7 @@ export default defineStore("user", {
       });
       // 1. 保存用户信息到 state 中
       this.profile = res.data.result;
+      setProfile(res.data.result);
     },
   },
 });
