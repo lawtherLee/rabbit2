@@ -4,9 +4,12 @@
 //   export default vueComponent;
 // }
 
-namespace QC {
-  const Login: {
+declare namespace QC {
+  declare const Login: {
     check: () => boolean;
     getMe: () => void;
+    api: () => any;
   };
+
+  declare const api = (str: string) => any;
 }

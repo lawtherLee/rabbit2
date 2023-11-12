@@ -11,3 +11,8 @@ export interface Profile {
   provinceCode: string;
   profession: string;
 }
+
+export type QQUserInfo = {
+  figureurl_qq_2: string;
+  nickname: string;
+};
