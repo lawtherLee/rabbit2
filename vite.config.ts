@@ -1,4 +1,4 @@
-import {defineConfig} from "vite";
+import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue"; // https://vitejs.dev/config/
 import vueSetupExtend from "vite-plugin-vue-setup-extend"; // https://vitejs.dev/config/
 // https://vitejs.dev/config/
@@ -18,5 +18,12 @@ export default defineConfig({
         `,
       },
     },
+  },
+  // 配置第三方登录
+  server: {
+    host: "www.corho.com",
+    port: 8080,
+    open: true,
+    cors: true,
   },
 });

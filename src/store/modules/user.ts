@@ -3,6 +3,7 @@ import instance from "@/utils/request.ts";
 import { IAxiosRes } from "@/types/data";
 import { Profile } from "@/types/user.ts";
 import { getProfile, setProfile } from "@/utils/storage.ts";
+import router from "@/router";
 
 export default defineStore("user", {
   state: () => {
@@ -41,6 +42,13 @@ export default defineStore("user", {
       // 1. 保存用户信息到 state 中
       this.profile = res.data.result;
       setProfile(res.data.result);
+    },
+
+    // 用户退出
+    async logout() {
+      this.profile = {} as Profile;
+      setProfile(this.profile);
+      await router.push("/login");
     },
   },
 });

@@ -16,7 +16,7 @@ const { userStore } = useStore();
             >{{ userStore.profile.account || userStore.profile.nickname }}</a
           >
         </li>
-        <li><a href="javascript:">退出登录</a></li>
+        <li><a href="javascript:" @click="userStore.logout()">退出登录</a></li>
         <li>
           <a href="javascript:" @click="router.push('/login')">请先登录</a>
         </li>
