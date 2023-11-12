@@ -44,6 +44,15 @@ export default defineStore("user", {
       setProfile(res.data.result);
     },
 
+    // QQ登录
+    async QQLogin(openId: string) {
+      const res = await instance.post<IAxiosRes<Profile>>("/login/social", {
+        unionId: openId,
+        source: 6,
+      });
+      console.log(res);
+    },
+
     // 用户退出
     async logout() {
       this.profile = {} as Profile;

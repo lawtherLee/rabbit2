@@ -4,8 +4,25 @@ import LoginFooter from "./components/login-footer.vue";
 import { ref } from "vue";
 import CallbackBind from "@/views/Login/components/callback-bind.vue";
 import CallbackPatch from "@/views/Login/components/callback-patch.vue";
+import useStore from "@/store";
+import Message from "@/components/message/index.ts";
 
 const hasAccount = ref(true);
+const { userStore } = useStore();
+const isLogin = QC.Login.check();
+console.log(isLogin);
+
+if (isLogin) {
+  // 代表跟QQ过来的
+  //获取openId
+  QC.Login.getMe(async (openId: string) => {
+    try {
+      await userStore.QQLogin(openId);
+    } catch (err) {
+      Message.success("登录成功，但为绑定账号");
+    }
+  });
+}
 </script>
 
 <template>
