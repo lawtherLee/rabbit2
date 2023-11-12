@@ -109,14 +109,19 @@ const onLogin = async () => {
   const { valid: accountValid } = await accountValidate();
   const { valid: passwordValid } = await passwordValidate();
   const { valid: isAgreeValid } = await isAgreeValidate();
-  if (!accountValid || !passwordValid || !isAgreeValid) return;
-  try {
+  // 走账号登录
+  if (loginType.value === "account") {
+    if (!accountValid || !passwordValid || !isAgreeValid) return;
     await userStore.accountLogin(password.value, account.value);
-    Message.success("登录成功", 2000);
-    await router.push("/");
-  } catch (err) {
-    // Message.error("用户名或密码错误", 2000);
+  } else {
+    // 走短信登录
+    const { valid: mobileValid } = await mobileValidate();
+    const { valid: codeValid } = await codeValidate();
+    if (!mobileValid || !codeValid) return;
+    await userStore.mobileLogin(mobile.value, code.value);
   }
+  Message.success("登录成功", 2000);
+  await router.push("/");
 };
 
 // 发送验证码
