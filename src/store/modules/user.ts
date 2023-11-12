@@ -6,7 +6,7 @@ import { Profile } from "@/types/user.ts";
 export default defineStore("user", {
   state: () => {
     return {
-      profile: {},
+      profile: {} as Profile,
     };
   },
   actions: {
