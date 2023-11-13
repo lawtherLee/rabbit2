@@ -4,6 +4,7 @@ import { QQUserInfo } from "@/types/user.ts";
 import { useField, useForm } from "vee-validate";
 import { codeRule, mobileRule } from "@/utils/validate.ts";
 import useStore from "@/store";
+import { useCountDown } from "@/hooks";
 
 const { userStore } = useStore();
 const userInfo = ref<QQUserInfo>({} as QQUserInfo);
@@ -30,10 +31,13 @@ const {
 const { value: code, errorMessage: codeErr } = useField("code");
 
 // 发送验证码
+const { time, start } = useCountDown(60);
 const send = async () => {
+  if (time.value > 0) return;
   const { valid } = await mobileValidate();
   if (!valid) return;
   await userStore.sendQQBindMsg(mobile.value);
+  start();
 };
 </script>
 <template>
@@ -66,7 +70,9 @@ const send = async () => {
           type="text"
           placeholder="短信验证码"
         />
-        <span class="code" @click="send">发送验证码</span>
+        <span class="code" @click="send">
+          {{ time ? time + "s" : "发送验证码" }}
+        </span>
       </div>
       <div class="error">{{ codeErr }}</div>
     </div>
