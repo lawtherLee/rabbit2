@@ -68,5 +68,15 @@ export default defineStore("user", {
         },
       });
     },
+
+    // 绑定qq并登录
+    async QQBindLogin(unionId: string, mobile: string, code: string) {
+      const res = await instance.post("/login/social/bind", {
+        unionId,
+        mobile,
+        code,
+      });
+      console.log(res);
+    },
   },
 });

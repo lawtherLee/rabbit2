@@ -8,16 +8,18 @@ import { useCountDown } from "@/hooks";
 
 const { userStore } = useStore();
 const userInfo = ref<QQUserInfo>({} as QQUserInfo);
-
+let openId = "";
 if (QC.Login.check) {
   QC.api("get_user_info").success((resp: any) => {
     console.log(resp);
     userInfo.value = resp.data;
   });
+  //openID
+  QC.Login.getMe((id: string) => (openId = id));
 }
 
 // 表单功能
-useForm({
+const { validate } = useForm({
   validationSchema: {
     mobile: mobileRule,
     code: codeRule,
@@ -28,7 +30,7 @@ const {
   errorMessage: mobileErr,
   validate: mobileValidate,
 } = useField<string>("mobile");
-const { value: code, errorMessage: codeErr } = useField("code");
+const { value: code, errorMessage: codeErr } = useField<string>("code");
 
 // 发送验证码
 const { time, start } = useCountDown(60);
@@ -38,6 +40,13 @@ const send = async () => {
   if (!valid) return;
   await userStore.sendQQBindMsg(mobile.value);
   start();
+};
+
+// 立即绑定
+const bind = async () => {
+  const { valid } = await validate();
+  if (!valid) return;
+  await userStore.QQBindLogin(openId, mobile.value, code.value);
 };
 </script>
 <template>
@@ -76,7 +85,7 @@ const send = async () => {
       </div>
       <div class="error">{{ codeErr }}</div>
     </div>
-    <a href="javascript:" class="submit">立即绑定</a>
+    <a href="javascript:" class="submit" @click="bind">立即绑定</a>
   </div>
 </template>
 
