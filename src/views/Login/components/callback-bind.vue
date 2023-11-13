@@ -1,7 +1,11 @@
 <script name="CallbackBind" lang="ts" setup>
 import { ref } from "vue";
 import { QQUserInfo } from "@/types/user.ts";
+import { useField, useForm } from "vee-validate";
+import { codeRule, mobileRule } from "@/utils/validate.ts";
+import useStore from "@/store";
 
+const { userStore } = useStore();
 const userInfo = ref<QQUserInfo>({} as QQUserInfo);
 
 if (QC.Login.check) {
@@ -10,6 +14,27 @@ if (QC.Login.check) {
     userInfo.value = resp.data;
   });
 }
+
+// 表单功能
+useForm({
+  validationSchema: {
+    mobile: mobileRule,
+    code: codeRule,
+  },
+});
+const {
+  value: mobile,
+  errorMessage: mobileErr,
+  validate: mobileValidate,
+} = useField<string>("mobile");
+const { value: code, errorMessage: codeErr } = useField("code");
+
+// 发送验证码
+const send = async () => {
+  const { valid } = await mobileValidate();
+  if (!valid) return;
+  await userStore.sendQQBindMsg(mobile.value);
+};
 </script>
 <template>
   <div class="xtx-form">
@@ -23,17 +48,27 @@ if (QC.Login.check) {
     <div class="xtx-form-item">
       <div class="field">
         <i class="icon iconfont icon-phone"></i>
-        <input class="input" type="text" placeholder="绑定的手机号" />
+        <input
+          v-model="mobile"
+          class="input"
+          type="text"
+          placeholder="绑定的手机号"
+        />
       </div>
-      <div class="error"></div>
+      <div class="error">{{ mobileErr }}</div>
     </div>
     <div class="xtx-form-item">
       <div class="field">
         <i class="icon iconfont icon-code"></i>
-        <input class="input" type="text" placeholder="短信验证码" />
-        <span class="code">发送验证码</span>
+        <input
+          v-model="code"
+          class="input"
+          type="text"
+          placeholder="短信验证码"
+        />
+        <span class="code" @click="send">发送验证码</span>
       </div>
-      <div class="error"></div>
+      <div class="error">{{ codeErr }}</div>
     </div>
     <a href="javascript:" class="submit">立即绑定</a>
   </div>

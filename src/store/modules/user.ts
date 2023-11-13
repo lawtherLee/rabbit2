@@ -59,5 +59,14 @@ export default defineStore("user", {
       setProfile(this.profile);
       await router.push("/login");
     },
+
+    // 绑定qq的短信验证码
+    async sendQQBindMsg(mobile: string) {
+      await instance.get("/login/social/code", {
+        params: {
+          mobile,
+        },
+      });
+    },
   },
 });
