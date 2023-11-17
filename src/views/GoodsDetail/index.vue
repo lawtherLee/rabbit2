@@ -10,23 +10,32 @@ import { Sku } from "@/types/goods";
 import { ref } from "vue";
 import GoodsDetailInfo from "@/views/GoodsDetail/components/goods-detail-info.vue";
 import GoodsHot from "@/views/GoodsDetail/components/goods-hot.vue";
+import Message from "@/components/message/index.ts";
 
 const route = useRoute();
 
-const { goodsStore } = useStore();
+const { goodsStore, cartStore } = useStore();
 const { goods } = storeToRefs(goodsStore); // 解决结构丢失响应式
 goodsStore.getGoodsInfo(route.params.id as string);
+
+let currentSku = {} as Sku;
 
 const onGetSku = (sku: Sku) => {
   console.log(sku);
   goods.value.price = sku.price;
   goods.value.oldPrice = sku.oldPrice;
+  currentSku = sku;
 };
 
 // 购买数量
 const count = ref(1);
 
-const addShopCar = () => {};
+// 加入购物车
+const addShopCar = () => {
+  console.log(currentSku);
+  if (!currentSku.id) return Message.warning("请选择完整规格");
+  cartStore.addCart(currentSku.id, count.value);
+};
 </script>
 
 <template>
