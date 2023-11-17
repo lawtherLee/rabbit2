@@ -1,4 +1,10 @@
-<script setup lang="ts" name="AppHeaderCart"></script>
+<script setup lang="ts" name="AppHeaderCart">
+import useStore from "@/store";
+
+const { cartStore } = useStore();
+
+cartStore.getCartData();
+</script>
 
 <template>
   <div class="cart">
@@ -8,21 +14,18 @@
     </a>
     <div class="layer">
       <div class="list">
-        <div class="item" v-for="i in 4" :key="i">
+        <div class="item" v-for="item in cartStore.cartList" :key="item.id">
           <RouterLink to="">
-            <img
-              src="https://yanxuan-item.nosdn.127.net/ead73130f3dbdb3cabe1c7b0f4fd3d28.png"
-              alt=""
-            />
+            <img :src="item.picture" alt="" />
             <div class="center">
               <p class="name ellipsis-2">
-                和手足干裂说拜拜 ingrams手足皲裂修复霜
+                {{ item.name }}
               </p>
               <p class="attr ellipsis">颜色：修复绿瓶 容量：150ml</p>
             </div>
             <div class="right">
-              <p class="price">&yen;45.00</p>
-              <p class="count">x2</p>
+              <p class="price">&yen;{{ item.price }}</p>
+              <p class="count">x{{ item.count }}</p>
             </div>
           </RouterLink>
           <i class="iconfont icon-close-new"></i>
