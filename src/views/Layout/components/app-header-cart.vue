@@ -34,7 +34,7 @@ cartStore.getCartData();
       <div class="foot">
         <div class="total">
           <p>共 {{ cartStore.cartCount }} 件商品</p>
-          <p>&yen;135.00</p>
+          <p>&yen;{{ cartStore.cartTotalPrice }}</p>
         </div>
         <XtxButton type="plain">去购物车结算</XtxButton>
       </div>

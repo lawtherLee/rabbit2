@@ -14,6 +14,7 @@ export default defineStore("cart", {
     async addCart(skuId: string, count: number) {
       const res = await instance.post("/member/cart", { skuId, count });
       console.log(res);
+      await this.getCartData();
     },
 
     // 获取购物车数据
@@ -25,6 +26,13 @@ export default defineStore("cart", {
   getters: {
     cartCount(): number {
       return this.cartList.reduce((count, item) => count + item.count, 0);
+    },
+    cartTotalPrice(): string {
+      return this.cartList
+        .reduce((price, item) => {
+          return price + item.count * item.price;
+        }, 0)
+        .toFixed(2);
     },
   },
 });

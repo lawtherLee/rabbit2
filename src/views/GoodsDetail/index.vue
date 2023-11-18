@@ -31,10 +31,11 @@ const onGetSku = (sku: Sku) => {
 const count = ref(1);
 
 // 加入购物车
-const addShopCar = () => {
+const addShopCar = async () => {
   console.log(currentSku);
   if (!currentSku.id) return Message.warning("请选择完整规格");
-  cartStore.addCart(currentSku.id, count.value);
+  await cartStore.addCart(currentSku.id, count.value);
+  Message.success("添加购物车成功");
 };
 </script>
 
