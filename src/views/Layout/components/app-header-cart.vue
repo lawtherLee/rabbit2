@@ -10,7 +10,7 @@ cartStore.getCartData();
   <div class="cart">
     <a class="curr" href="javascript:">
       <i class="iconfont icon-cart"></i>
-      <em>2</em>
+      <em>{{ cartStore.cartCount }}</em>
     </a>
     <div class="layer">
       <div class="list">
@@ -21,7 +21,7 @@ cartStore.getCartData();
               <p class="name ellipsis-2">
                 {{ item.name }}
               </p>
-              <p class="attr ellipsis">颜色：修复绿瓶 容量：150ml</p>
+              <p class="attr ellipsis">{{ item.attrsText }}</p>
             </div>
             <div class="right">
               <p class="price">&yen;{{ item.price }}</p>
@@ -33,7 +33,7 @@ cartStore.getCartData();
       </div>
       <div class="foot">
         <div class="total">
-          <p>共 3 件商品</p>
+          <p>共 {{ cartStore.cartCount }} 件商品</p>
           <p>&yen;135.00</p>
         </div>
         <XtxButton type="plain">去购物车结算</XtxButton>

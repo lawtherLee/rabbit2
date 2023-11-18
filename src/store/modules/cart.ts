@@ -22,4 +22,9 @@ export default defineStore("cart", {
       this.cartList = res.data.result;
     },
   },
+  getters: {
+    cartCount(): number {
+      return this.cartList.reduce((count, item) => count + item.count, 0);
+    },
+  },
 });
