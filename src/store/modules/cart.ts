@@ -25,7 +25,7 @@ export default defineStore("cart", {
 
     // 删除购物车
     async delCart(skuId: string[]) {
-      const res = await instance.delete("/member/cart", {
+      await instance.delete("/member/cart", {
         data: {
           ids: skuId,
         },
@@ -37,10 +37,28 @@ export default defineStore("cart", {
     cartCount(): number {
       return this.cartList.reduce((count, item) => count + item.count, 0);
     },
+    selectedCount(): number {
+      return this.cartList.reduce((count: number, item: CartItem) => {
+        if (item.selected) {
+          return count + item.count;
+        }
+        return count;
+      }, 0);
+    },
     cartTotalPrice(): string {
       return this.cartList
         .reduce((price, item) => {
           return price + item.count * item.price;
+        }, 0)
+        .toFixed(2);
+    },
+    selectedTotalPrice(): string {
+      return this.cartList
+        .reduce((price: number, item: CartItem) => {
+          if (item.selected) {
+            return price + item.count * item.price;
+          }
+          return price;
         }, 0)
         .toFixed(2);
     },
