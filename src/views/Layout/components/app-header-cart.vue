@@ -28,7 +28,10 @@ cartStore.getCartData();
               <p class="count">x{{ item.count }}</p>
             </div>
           </RouterLink>
-          <i class="iconfont icon-close-new"></i>
+          <i
+            @click="cartStore.delCart([item.skuId])"
+            class="iconfont icon-close-new"
+          />
         </div>
       </div>
       <div class="foot">

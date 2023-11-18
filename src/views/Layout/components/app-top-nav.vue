@@ -1,9 +1,15 @@
 <script lang="ts" setup name="AppTopnav">
 import { useRouter } from "vue-router";
 import useStore from "@/store";
+import Confirm from "@/components/confirm/index.ts";
 
 const router = useRouter();
 const { userStore } = useStore();
+
+const onLogout = async () => {
+  await Confirm("提示", "是否确认退出登录");
+  await userStore.logout();
+};
 </script>
 
 <template>
@@ -16,7 +22,7 @@ const { userStore } = useStore();
             >{{ userStore.profile.account || userStore.profile.nickname }}</a
           >
         </li>
-        <li><a href="javascript:" @click="userStore.logout()">退出登录</a></li>
+        <li><a href="javascript:" @click="onLogout">退出登录</a></li>
         <li>
           <a href="javascript:" @click="router.push('/login')">请先登录</a>
         </li>

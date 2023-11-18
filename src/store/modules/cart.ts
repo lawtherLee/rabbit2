@@ -22,6 +22,16 @@ export default defineStore("cart", {
       const res = await instance.get<IAxiosRes<CartItem[]>>("/member/cart");
       this.cartList = res.data.result;
     },
+
+    // 删除购物车
+    async delCart(skuId: string[]) {
+      const res = await instance.delete("/member/cart", {
+        data: {
+          ids: skuId,
+        },
+      });
+      await this.getCartData();
+    },
   },
   getters: {
     cartCount(): number {
