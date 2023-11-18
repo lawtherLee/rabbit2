@@ -26,7 +26,7 @@ import XtxConfirm from "@/components/confirm/index.vue";
 export default function Confirm(title: string, content: string) {
   return new Promise((resolve, reject) => {
     const onConfirm = () => {
-      resolve();
+      resolve("");
       render(null, document.body);
     };
     const onCancel = () => {

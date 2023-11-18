@@ -1,17 +1,18 @@
 <script setup lang="ts" name="AppHeaderCart">
 import useStore from "@/store";
+import { useRouter } from "vue-router";
 
 const { cartStore } = useStore();
-
+const router = useRouter();
 cartStore.getCartData();
 </script>
 
 <template>
   <div class="cart">
-    <a class="curr" href="javascript:">
+    <router-link class="curr" href="javascript:" to="/cart">
       <i class="iconfont icon-cart"></i>
       <em>{{ cartStore.cartCount }}</em>
-    </a>
+    </router-link>
     <div class="layer">
       <div class="list">
         <div class="item" v-for="item in cartStore.cartList" :key="item.id">
@@ -39,7 +40,9 @@ cartStore.getCartData();
           <p>共 {{ cartStore.cartCount }} 件商品</p>
           <p>&yen;{{ cartStore.cartTotalPrice }}</p>
         </div>
-        <XtxButton type="plain">去购物车结算</XtxButton>
+        <XtxButton type="plain" @click="router.push('/cart')"
+          >去购物车结算</XtxButton
+        >
       </div>
     </div>
   </div>
