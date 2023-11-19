@@ -11,7 +11,7 @@ const onRemove = async (skuId: string) => {
   await cartStore.delCart([skuId]);
 };
 
-const onUpdateCount = (skuId: string, ev) => {
+const onUpdateCount = (skuId: string, ev: number) => {
   cartStore.changeBuyCount(skuId, ev);
 };
 </script>
@@ -40,7 +40,17 @@ const onUpdateCount = (skuId: string, ev) => {
           <!-- 有效商品 -->
           <tbody>
             <tr v-for="item in cartStore.cartList" :key="item.id">
-              <td><XtxCheckbox v-model="item.selected" /></td>
+              <td>
+                <XtxCheckbox
+                  @click="
+                    cartStore.updateCart(item.skuId, {
+                      selected: item.selected,
+                      count: item.count,
+                    })
+                  "
+                  v-model="item.selected"
+                />
+              </td>
               <td>
                 <div class="goods">
                   <RouterLink to="/">
