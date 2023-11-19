@@ -34,8 +34,17 @@ export default defineStore("cart", {
 
     // 获取购物车数据
     async getCartData() {
-      const res = await instance.get<IAxiosRes<CartItem[]>>("/member/cart");
-      this.cartList = res.data.result;
+      if (this.isLogin) {
+        const res = await instance.get<IAxiosRes<CartItem[]>>("/member/cart");
+        this.cartList = res.data.result;
+        return;
+      }
+      // 主动更新本地商品价格
+      for (const item of this.cartList) {
+        const res = await instance.get("/goods/stock/" + item.skuId);
+        item.nowPrice = res.data.result.nowPrice;
+        item.stock = res.data.result.stock;
+      }
     },
 
     // 删除购物车
@@ -88,6 +97,17 @@ export default defineStore("cart", {
         return;
       }
       this.cartList.forEach((item) => (item.selected = selected));
+    },
+
+    // 合并本地购物车缓存
+    async mergeStorageCart() {
+      const mergeData = this.cartList.map((item) => ({
+        skuId: item.skuId,
+        selected: item.selected,
+        count: item.count,
+      }));
+      await instance.post("/member/cart/merge", mergeData);
+      await this.getCartData();
     },
   },
   getters: {

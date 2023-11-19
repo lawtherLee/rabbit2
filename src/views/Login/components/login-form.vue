@@ -7,7 +7,7 @@ import Message from "@/components/message/index.ts";
 import { useCountDown } from "@/hooks";
 
 const router = useRouter();
-const { userStore } = useStore();
+const { userStore, cartStore } = useStore();
 const loginType = ref<"account" | "mobile">("account");
 
 // 点击切换登录方式
@@ -122,6 +122,9 @@ const onLogin = async () => {
   }
   Message.success("登录成功", 2000);
   await router.push("/");
+
+  // 合并购物车
+  await cartStore.mergeStorageCart();
 };
 
 // 发送验证码
