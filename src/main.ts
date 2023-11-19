@@ -8,9 +8,12 @@ import "@/assets/styles/common.less";
 import router from "@/router";
 import { createPinia } from "pinia";
 import XtxUi from "@/components";
+import piniaPluginSistedState from "pinia-plugin-persistedstate";
 
 const app = createApp(App);
 const pinia = createPinia();
+
+pinia.use(piniaPluginSistedState);
 
 app.use(XtxUi);
 

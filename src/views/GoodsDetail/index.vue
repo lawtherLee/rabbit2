@@ -35,6 +35,9 @@ const count = ref(1);
 const addShopCar = async () => {
   console.log(currentSku);
   if (!currentSku.id) return Message.warning("请选择完整规格");
+  const attrsText = currentSku.specs
+    .map((item) => item.name + ":" + item.valueName)
+    .join(" ");
   await cartStore.addCart({
     // 本地添加
     id: goods.value.id,
@@ -43,7 +46,7 @@ const addShopCar = async () => {
     price: goods.value.price,
     count: count.value,
     skuId: currentSku.id,
-    attrsText: "",
+    attrsText,
     selected: true,
     nowPrice: goods.value.price,
     stock: goods.value.inventory,

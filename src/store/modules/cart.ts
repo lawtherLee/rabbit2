@@ -6,6 +6,7 @@ import Message from "@/components/message/index.ts";
 import useStore from "@/store";
 
 export default defineStore("cart", {
+  persist: true,
   state() {
     return {
       cartList: [] as CartItem[],
