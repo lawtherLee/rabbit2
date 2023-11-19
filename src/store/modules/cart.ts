@@ -48,6 +48,12 @@ export default defineStore("cart", {
       await instance.put("/member/cart/" + id, data);
       Message.success("更新成功");
     },
+
+    // 更新全选
+    async updateAllCheck(selected: boolean) {
+      await instance.put("/member/cart/selected", { selected });
+      await this.getCartData();
+    },
   },
   getters: {
     cartCount(): number {
@@ -77,6 +83,10 @@ export default defineStore("cart", {
           return price;
         }, 0)
         .toFixed(2);
+    },
+    // 是否全选
+    isAllCheck(): boolean {
+      return this.cartList.every((item: CartItem) => item.selected);
     },
   },
 });
