@@ -11,6 +11,7 @@ import { ref } from "vue";
 import GoodsDetailInfo from "@/views/GoodsDetail/components/goods-detail-info.vue";
 import GoodsHot from "@/views/GoodsDetail/components/goods-hot.vue";
 import Message from "@/components/message/index.ts";
+import { CartItem } from "@/types/cart";
 
 const route = useRoute();
 
@@ -34,7 +35,20 @@ const count = ref(1);
 const addShopCar = async () => {
   console.log(currentSku);
   if (!currentSku.id) return Message.warning("请选择完整规格");
-  await cartStore.addCart(currentSku.id, count.value);
+  await cartStore.addCart({
+    // 本地添加
+    id: goods.value.id,
+    name: goods.value.name,
+    picture: goods.value.mainPictures[0],
+    price: goods.value.price,
+    count: count.value,
+    skuId: currentSku.id,
+    attrsText: "",
+    selected: true,
+    nowPrice: goods.value.price,
+    stock: goods.value.inventory,
+    isEffective: true,
+  } as CartItem);
   Message.success("添加购物车成功");
 };
 </script>

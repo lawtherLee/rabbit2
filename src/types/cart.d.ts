@@ -6,7 +6,7 @@ export interface CartItem {
   attrsText: string;
   picture: string;
   price: number;
-  nowPrice: string;
+  nowPrice: number;
   nowOriginalPrice: string;
   selected: boolean;
   stock: number;

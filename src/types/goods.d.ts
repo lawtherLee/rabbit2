@@ -17,7 +17,7 @@ export type GoodsInfo = {
   name: string;
   spuCode: string;
   desc: string;
-  price: string;
+  price: number;
   oldPrice: string;
   discount: number;
   inventory: number;
@@ -50,7 +50,7 @@ export type Sku = {
   id: string;
   inventory: number;
   oldPrice: string;
-  price: string;
+  price: number;
   skuCode: string;
   specs: SkuSpec[];
 };

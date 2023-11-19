@@ -3,6 +3,7 @@ import instance from "@/utils/request.ts";
 import { IAxiosRes } from "@/types/data";
 import { CartItem } from "@/types/cart";
 import Message from "@/components/message/index.ts";
+import useStore from "@/store";
 
 export default defineStore("cart", {
   state() {
@@ -12,10 +13,22 @@ export default defineStore("cart", {
   },
   actions: {
     // 添加购物车
-    async addCart(skuId: string, count: number) {
-      const res = await instance.post("/member/cart", { skuId, count });
-      console.log(res);
-      await this.getCartData();
+    async addCart(data: CartItem) {
+      if (this.isLogin) {
+        const res = await instance.post("/member/cart", {
+          skuId: data.skuId,
+          count: data.count,
+        });
+        console.log(res);
+        await this.getCartData();
+      } else {
+        const findItem = this.cartList.find((item) => item.id === data.id);
+        if (findItem) {
+          findItem.count += data.count;
+        } else {
+          this.cartList.unshift(data);
+        }
+      }
     },
 
     // 获取购物车数据
@@ -56,6 +69,12 @@ export default defineStore("cart", {
     },
   },
   getters: {
+    // 判断是否登录
+    isLogin(): boolean {
+      const { userStore } = useStore();
+      return !!userStore.profile.token;
+    },
+
     cartCount(): number {
       return this.cartList.reduce((count, item) => count + item.count, 0);
     },
