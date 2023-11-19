@@ -40,12 +40,18 @@ export default defineStore("cart", {
 
     // 删除购物车
     async delCart(skuId: string[]) {
-      await instance.delete("/member/cart", {
-        data: {
-          ids: skuId,
-        },
-      });
-      await this.getCartData();
+      if (this.isLogin) {
+        await instance.delete("/member/cart", {
+          data: {
+            ids: skuId,
+          },
+        });
+        await this.getCartData();
+      } else {
+        this.cartList = this.cartList.filter((item) => {
+          return !skuId.includes(item.skuId);
+        });
+      }
     },
 
     // 监听数量变化
@@ -59,14 +65,29 @@ export default defineStore("cart", {
 
     // 更新选中状态和数量
     async updateCart(id: string, data: { selected?: boolean; count: number }) {
-      await instance.put("/member/cart/" + id, data);
-      Message.success("更新成功");
+      if (this.isLogin) {
+        await instance.put("/member/cart/" + id, data);
+        Message.success("更新成功");
+        return;
+      }
+      const findItem = this.cartList.find((item) => item.id === id);
+
+      if (!findItem) return;
+      if (data.selected === undefined) {
+        findItem.count = data.count;
+      } else {
+        findItem.selected = data.selected;
+      }
     },
 
     // 更新全选
     async updateAllCheck(selected: boolean) {
-      await instance.put("/member/cart/selected", { selected });
-      await this.getCartData();
+      if (this.isLogin) {
+        await instance.put("/member/cart/selected", { selected });
+        await this.getCartData();
+        return;
+      }
+      this.cartList.forEach((item) => (item.selected = selected));
     },
   },
   getters: {
