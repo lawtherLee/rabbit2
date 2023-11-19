@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import instance from "@/utils/request.ts";
 import { IAxiosRes } from "@/types/data";
 import { CartItem } from "@/types/cart";
+import Message from "@/components/message/index.ts";
 
 export default defineStore("cart", {
   state() {
@@ -31,6 +32,21 @@ export default defineStore("cart", {
         },
       });
       await this.getCartData();
+    },
+
+    // 监听数量变化
+    async changeBuyCount(id: string, count: number) {
+      const findItem = this.cartList.find((item) => item.skuId === id);
+      if (findItem) {
+        findItem.count = count;
+      }
+      await this.updateCart(id, { count });
+    },
+
+    // 更新选中状态和数量
+    async updateCart(id: string, data: { selected?: boolean; count: number }) {
+      await instance.put("/member/cart/" + id, data);
+      Message.success("更新成功");
     },
   },
   getters: {

@@ -10,6 +10,10 @@ const onRemove = async (skuId: string) => {
   await Confirm("提示", "确认删除");
   await cartStore.delCart([skuId]);
 };
+
+const onUpdateCount = (skuId: string, ev) => {
+  cartStore.changeBuyCount(skuId, ev);
+};
 </script>
 
 <template>
@@ -54,7 +58,11 @@ const onRemove = async (skuId: string) => {
                 <p>&yen;{{ item.nowPrice }}</p>
               </td>
               <td class="tc">
-                <XtxNumbox :isShowLabel="false" v-model:buyCount="item.count" />
+                <XtxNumbox
+                  :isShowLabel="false"
+                  :buyCount="item.count"
+                  @update:buyCount="onUpdateCount(item.skuId, $event)"
+                />
               </td>
               <td class="tc">
                 <p class="f16 red">
