@@ -1,4 +1,9 @@
-<script lang="ts" setup name="XtxPayCheckoutPage"></script>
+<script lang="ts" setup name="XtxPayCheckoutPage">
+import useStore from "@/store";
+
+const { checkoutStore } = useStore();
+checkoutStore.getCheckoutInfo();
+</script>
 
 <template>
   <div class="xtx-pay-checkout-page">

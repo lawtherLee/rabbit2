@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import useStore from "@/store";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -46,5 +47,14 @@ const router = createRouter({
       component: () => import("@/views/Login/callback.vue"),
     },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  const { cartStore } = useStore();
+  if (!cartStore.isLogin && to.path.startsWith("/member")) {
+    next("/login");
+  } else {
+    next();
+  }
 });
 export default router;
