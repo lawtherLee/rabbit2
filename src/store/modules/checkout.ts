@@ -19,7 +19,7 @@ export default defineStore("checkout", {
   },
   getters: {
     showUserAddress(): UserAddress | null {
-      if (!this.checkoutInfo.userAddresses.length) return null;
+      if (!this.checkoutInfo.userAddresses?.length) return null;
       const findItem = this.checkoutInfo.userAddresses.find(
         (item) => item.isDefault === 0,
       );
