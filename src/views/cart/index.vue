@@ -1,9 +1,12 @@
 <script setup lang="ts" name="Cart">
 import useStore from "@/store";
 import Confirm from "@/components/confirm/index.ts";
+import Message from "@/components/message/index.ts";
+import { useRoute, useRouter } from "vue-router";
 
 const { cartStore } = useStore();
-
+const router = useRouter();
+const route = useRoute();
 const onRemove = async (skuId: string) => {
   await Confirm("提示", "确认删除");
   await cartStore.delCart([skuId]);
@@ -11,6 +14,18 @@ const onRemove = async (skuId: string) => {
 
 const onUpdateCount = (skuId: string, ev: number) => {
   cartStore.changeBuyCount(skuId, ev);
+};
+
+// 下单结算
+const goCheckout = async () => {
+  const isSelected = cartStore.cartList.some((item) => item.selected);
+  if (!isSelected) return Message.error("请选择商品");
+  if (cartStore.isLogin) {
+    await router.push("/member/checkout");
+  } else {
+    await Confirm("提示", "是否登录");
+    await router.push("/login?redirect=" + route.fullPath);
+  }
 };
 </script>
 
@@ -118,7 +133,7 @@ const onUpdateCount = (skuId: string, ev: number) => {
           共 {{ cartStore.cartCount }} 件有效商品，已选择
           {{ cartStore.selectedCount }} 件，商品合计：
           <span class="red">¥{{ cartStore.selectedTotalPrice }}</span>
-          <XtxButton type="primary">下单结算</XtxButton>
+          <XtxButton type="primary" @click="goCheckout">下单结算</XtxButton>
         </div>
       </div>
     </div>
