@@ -1,15 +1,47 @@
-<script lang="ts" setup name="XtxDialog"></script>
+<script lang="ts" setup name="XtxDialog">
+import { ref } from "vue";
+import { onClickOutside } from "@vueuse/core";
+
+const { title = "对话框" } = defineProps<{
+  title?: string;
+  modelValue: boolean;
+}>();
+
+const target = ref(null);
+const emit = defineEmits(["update:modelValue", "close", "confirm"]);
+
+// 点击灰色遮罩
+onClickOutside(target, (evt) => {
+  onClose();
+});
+const onClose = () => {
+  emit("update:modelValue", false);
+  emit("close");
+};
+
+const onConfirm = () => {
+  emit("confirm");
+};
+</script>
 <template>
-  <div class="xtx-dialog">
-    <div class="wrapper">
+  <div class="xtx-dialog" v-if="modelValue">
+    <div class="wrapper" ref="target">
       <div class="header">
-        <h3>切换收货地址</h3>
-        <a href="JavaScript:" class="iconfont icon-close-new"></a>
+        <h3>{{ title }}</h3>
+        <a
+          @click="onClose"
+          href="JavaScript:"
+          class="iconfont icon-close-new"
+        ></a>
       </div>
-      <div class="body">对话框内容</div>
+      <div class="body">
+        <slot name="body"></slot>
+      </div>
       <div class="footer">
-        <XtxButton type="gray" style="margin-right: 20px"> 取消 </XtxButton>
-        <XtxButton type="primary">确认</XtxButton>
+        <XtxButton @click="onClose" type="gray" style="margin-right: 20px">
+          取消
+        </XtxButton>
+        <XtxButton @click="onConfirm" type="primary">确认</XtxButton>
       </div>
     </div>
   </div>
