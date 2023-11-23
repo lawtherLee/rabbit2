@@ -1,4 +1,42 @@
-<script name="XtxPayPage" setup lang="ts"></script>
+<script name="XtxPayPage" setup lang="ts">
+import instance from "@/utils/request.ts";
+import { useRoute } from "vue-router";
+import { IAxiosRes } from "@/types/data";
+import { OrderPayInfo } from "@/types/checkout.ts";
+import { ref, watch } from "vue";
+import { useCountDown } from "@/hooks";
+import * as dayjs from "dayjs";
+import router from "@/router";
+import Message from "@/components/message/index.ts";
+
+const route = useRoute();
+const orderInfo = ref<OrderPayInfo>({} as OrderPayInfo);
+
+const showTime = ref(0);
+const getOrderInfo = async () => {
+  const id = route.query.id;
+  const res = await instance.get<IAxiosRes<OrderPayInfo>>(
+    "/member/order/" + id,
+  );
+  orderInfo.value = res.data.result;
+  // 倒计时
+  const { time, start } = useCountDown(orderInfo.value.countdown);
+  watch(time, (val) => {
+    if (val <= 0) {
+      router.replace("/cart");
+      Message.error("订单已过期");
+      return;
+    }
+    showTime.value = time.value;
+  });
+  start();
+};
+getOrderInfo();
+
+const formatCountDown = (time: number) => {
+  return dayjs.unix(time).format("mm分ss");
+};
+</script>
 <template>
   <div class="xtx-pay-page">
     <div class="container">
@@ -14,13 +52,13 @@
           <p>订单提交成功！请尽快完成支付。</p>
           <p>
             支付还剩
-            <span>24分59秒</span>
+            <span>{{ formatCountDown(showTime) }}</span>
             , 超时后将取消订单
           </p>
         </div>
         <div class="amount">
           <span>应付总额：</span>
-          <span>¥5673.00</span>
+          <span>¥{{ orderInfo.totalMoney?.toFixed(2) }}</span>
         </div>
       </div>
       <!-- 付款方式 -->
