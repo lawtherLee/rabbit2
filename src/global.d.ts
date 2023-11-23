@@ -11,6 +11,7 @@ import XtxCheckbox from "@/components/checkbox/index.vue";
 import XtxMessage from "@/components/message/index.vue";
 import XtxConfirm from "@/components/confirm/index.vue";
 import XtxDialog from "@/components/dialog/index.vue";
+import XtxSwitch from "@/components/switch/index.vue";
 
 // 定义全局类型声明
 declare module "vue" {
@@ -29,6 +30,7 @@ declare module "vue" {
     XtxMessage: typeof XtxMessage;
     XtxConfirm: typeof XtxConfirm;
     XtxDialog: typeof XtxDialog;
+    XtxSwitch: typeof XtxSwitch;
   }
 }
 

@@ -37,12 +37,12 @@ const onConfirm = () => {
       <div class="body">
         <slot name="body"></slot>
       </div>
-      <div class="footer">
+      <slot name="footer">
         <XtxButton @click="onClose" type="gray" style="margin-right: 20px">
           取消
         </XtxButton>
         <XtxButton @click="onConfirm" type="primary">确认</XtxButton>
-      </div>
+      </slot>
     </div>
   </div>
 </template>

@@ -14,6 +14,7 @@ import XtxCheckbox from "@/components/checkbox/index.vue";
 import XtxMessage from "@/components/message/index.vue";
 import XtxConfirm from "@/components/confirm/index.vue";
 import XtxDialog from "@/components/dialog/index.vue";
+import XtxSwitch from "@/components/switch/index.vue";
 
 const components = [
   XtxSkeleton,
@@ -29,6 +30,7 @@ const components = [
   XtxMessage,
   XtxConfirm,
   XtxDialog,
+  XtxSwitch,
 ];
 
 // export default function (app: App) {
