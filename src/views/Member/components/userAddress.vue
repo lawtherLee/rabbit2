@@ -1,7 +1,9 @@
 <script lang="ts" setup name="CheckoutAddress">
 import useStore from "@/store";
+import { ref } from "vue";
 
 const { checkoutStore } = useStore();
+const dialogVisible = ref(false);
 </script>
 <template>
   <div class="checkout-address">

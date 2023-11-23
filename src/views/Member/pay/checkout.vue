@@ -1,9 +1,30 @@
 <script lang="ts" setup name="XtxPayCheckoutPage">
 import useStore from "@/store";
 import UserAddress from "@/views/Member/components/userAddress.vue";
+import Message from "@/components/message/index.ts";
+import instance from "@/utils/request.ts";
+import router from "@/router";
 
-const { checkoutStore } = useStore();
+const { checkoutStore, cartStore } = useStore();
 checkoutStore.getCheckoutInfo();
+
+const submitCheckout = async () => {
+  if (!checkoutStore.showUserAddress) return Message.error("请选择收货地址");
+  const res = await instance.post("/member/order", {
+    goods: checkoutStore.checkoutInfo.goods.map((item) => {
+      return {
+        skuId: item.skuId,
+        count: item.count,
+      };
+    }),
+    addressId: checkoutStore.showUserAddress.id,
+  });
+  Message.success("下单成功");
+  // 重新获取购物车列表
+  await cartStore.getCartData();
+
+  await router.replace("/member/pay?id=" + res.data.result.id);
+};
 </script>
 
 <template>
@@ -122,7 +143,7 @@ checkoutStore.getCheckoutInfo();
         </div>
         <!-- 提交订单 -->
         <div class="submit">
-          <XtxButton type="primary">提交订单</XtxButton>
+          <XtxButton type="primary" @click="submitCheckout">提交订单</XtxButton>
         </div>
       </div>
     </div>

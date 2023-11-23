@@ -34,7 +34,15 @@ const router = createRouter({
         },
         {
           path: "/member/checkout",
-          component: () => import("@/views/Member/checkout/index.vue"),
+          component: () => import("@/views/Member/pay/checkout.vue"),
+        },
+        {
+          path: "/member/pay",
+          component: () => import("@/views/Member/pay/index.vue"),
+        },
+        {
+          path: "/pay/callback",
+          component: () => import("@/views/Member/pay/callback.vue"),
         },
       ],
     },
