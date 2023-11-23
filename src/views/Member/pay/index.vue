@@ -1,5 +1,5 @@
 <script name="XtxPayPage" setup lang="ts">
-import instance from "@/utils/request.ts";
+import instance, { baseURL } from "@/utils/request.ts";
 import { useRoute } from "vue-router";
 import { IAxiosRes } from "@/types/data";
 import { OrderPayInfo } from "@/types/checkout.ts";
@@ -36,6 +36,12 @@ getOrderInfo();
 const formatCountDown = (time: number) => {
   return dayjs.unix(time).format("mm分ss");
 };
+
+// 跳转支付宝支付
+const redirectUrl = encodeURIComponent(
+  "http://www.corho.com:8080/pay/callback",
+);
+const aliPayUrl = `${baseURL}pay/aliPay?orderId=${route.query.id}&redirect=${redirectUrl}`;
 </script>
 <template>
   <div class="xtx-pay-page">
@@ -67,7 +73,7 @@ const formatCountDown = (time: number) => {
         <div class="item">
           <p>支付平台</p>
           <a class="btn wx" href="javascript:"></a>
-          <a class="btn alipay" href="javascript:"></a>
+          <a class="btn alipay" :href="aliPayUrl"></a>
         </div>
         <div class="item">
           <p>支付方式</p>

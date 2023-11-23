@@ -3,8 +3,9 @@ import Message from "@/components/message/index.ts";
 import useStore from "@/store";
 
 // 备用接口地址: http://pcapi-xiaotuxian-front-devtest.itheima.net/
+export const baseURL = "http://pcapi-xiaotuxian-front.itheima.net/";
 const instance = axios.create({
-  baseURL: "http://pcapi-xiaotuxian-front.itheima.net/",
+  baseURL,
   timeout: 5000,
 });
 
